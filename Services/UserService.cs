@@ -42,13 +42,13 @@ public class UserService : IUserService
         return usersDTO;
     }
 
-    public string UpdateUserPassword(Guid id, string password){
-        TbUser? user = _repository.GetUserById(id);
+    public string UpdateUserPassword(string Cpf, string password){
+        TbUser? user = _repository.GetUserById(Cpf);
         if(user == null){
             return "error";
         }
 
-        _repository.UpdateUser(id, password);
+        _repository.UpdateUser(Cpf, password);
         return "";
     }
 }

@@ -23,13 +23,13 @@ public class UserRepository : IUserRepository
         return tbUsers;
     }
 
-    public TbUser? GetUserById(Guid id){
-        TbUser? findedUser = dbContext.TbUsers.Find(id);
+    public TbUser? GetUserById(string Cpf){
+        TbUser? findedUser = dbContext.TbUsers.Find(Cpf);
         return findedUser;
     }
 
-    public void UpdateUser(Guid id, string newPassword){
-        TbUser? findedUser = dbContext.TbUsers.Find(id);
+    public void UpdateUser(string Cpf, string newPassword){
+        TbUser? findedUser = dbContext.TbUsers.Find(Cpf);
         findedUser.Password = newPassword;
         dbContext.SaveChanges();
     }

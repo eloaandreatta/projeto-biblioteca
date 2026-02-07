@@ -120,3 +120,4 @@ C:\Users\Power\pBiblioteca\obj\Debug\net10.0\refint\pBiblioteca.dll
 C:\Users\Power\pBiblioteca\obj\Debug\net10.0\pBiblioteca.pdb
 C:\Users\Power\pBiblioteca\obj\Debug\net10.0\pBiblioteca.genruntimeconfig.cache
 C:\Users\Power\pBiblioteca\obj\Debug\net10.0\ref\pBiblioteca.dll
+C:\Users\Power\pBiblioteca\obj\Debug\net10.0\pBiblioteca.sourcelink.json

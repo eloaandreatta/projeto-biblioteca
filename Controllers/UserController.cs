@@ -23,9 +23,9 @@ public class UserController : ControllerBase
         return _service.GetUsers();
     }
  
-    [HttpPatch("{id}", Name = "UpdateUserPassword")]
-    public IActionResult UpdateUser([FromRoute] Guid id, [FromBody] UpdateUserRequest request){
-       string error = _service.UpdateUserPassword(id, request.Senha);
+    [HttpPut("{Cpf}", Name = "UpdateUserPassword")]
+    public IActionResult UpdateUser([FromRoute] string Cpf, [FromBody] UpdateUserRequest request){
+       string error = _service.UpdateUserPassword(Cpf, request.Senha);
 
         if(error == "error"){
             return BadRequest();
@@ -33,4 +33,5 @@ public class UserController : ControllerBase
         
         return Ok();
     }
+
 }
