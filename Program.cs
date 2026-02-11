@@ -10,12 +10,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
 
-// Banco (PostgreSQL) - precisa existir PostgresContext
+// Banco (PostgreSQL) 
 builder.Services.AddDbContext<PostgresContext>();
 
-// DI - precisam existir essas interfaces/classes
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 var app = builder.Build();
 
