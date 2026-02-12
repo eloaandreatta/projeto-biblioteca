@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using pBiblioteca.Models;
 using pBiblioteca.DTO;
+using pBiblioteca.Services;
+using pBiblioteca.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

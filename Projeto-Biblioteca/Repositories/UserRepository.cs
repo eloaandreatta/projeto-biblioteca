@@ -3,6 +3,8 @@ using pBiblioteca.DTO;
 using Microsoft.EntityFrameworkCore;
 
 // Responsavel pela conexao com o banco de dados
+namespace pBiblioteca.Repositories
+{
 public class UserRepository : IUserRepository
 {
     private PostgresContext dbContext;
@@ -48,4 +50,5 @@ public class UserRepository : IUserRepository
 
         dbContext.SaveChanges();
     }
+}
 }

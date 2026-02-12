@@ -1,7 +1,7 @@
 using pBiblioteca.DTO;
 using pBiblioteca.Models;
 
-public interface IUserRepository
+    public interface IUserRepository
 {
     List<TbUser> SelectUsers();
 
@@ -13,3 +13,6 @@ public interface IUserRepository
 
     void UpdateUserData(string cpf, UpdateUserRequestDTO request);
 }
+
+
+
