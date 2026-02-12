@@ -1,4 +1,6 @@
 using pBiblioteca.Models;
+namespace pBiblioteca.DTO;
+
 
 // responsavel por toda logica do EndPoint
 // Conecta ao repositorio
@@ -26,6 +28,8 @@ public class UserService : IUserService
             usuarioRetorno.Cpf = tbUser.Cpf;
             usuarioRetorno.Nome = tbUser.Name;
             usuarioRetorno.Email = tbUser.Email;
+            usuarioRetorno.Telefone = tbUser.Telephone;
+            usuarioRetorno.Endereco = tbUser.Address;
 
             // adiciona o usuario a minha lista de retorno
             usersDTO.Add(usuarioRetorno);
@@ -42,13 +46,15 @@ public class UserService : IUserService
         return usersDTO;
     }
 
-    public string UpdateUserPassword(string Cpf, string password){
-        TbUser? user = _repository.GetUserById(Cpf);
-        if(user == null){
-            return "error";
-        }
+    public string UpdateUser(string cpf, UpdateUserRequestDTO request)
+    {
+        TbUser? user = _repository.GetUserById(cpf);
 
-        _repository.UpdateUser(Cpf, password);
-        return "";
+            if (user == null)
+            return "error";
+
+            _repository.UpdateUserData(cpf, request);
+            return "";
     }
+
 }

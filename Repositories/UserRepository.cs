@@ -1,4 +1,5 @@
 using pBiblioteca.Models;
+using pBiblioteca.DTO;
 using Microsoft.EntityFrameworkCore;
 
 // Responsavel pela conexao com o banco de dados
@@ -33,4 +34,20 @@ public class UserRepository : IUserRepository
         findedUser.Password = newPassword;
         dbContext.SaveChanges();
     }
+
+
+    public void UpdateUserData(string cpf, UpdateUserRequestDTO request)
+    {
+    TbUser? user = dbContext.TbUsers.Find(cpf);
+
+    if (user == null) return;
+
+    user.Name = request.Nome;
+    user.Email = request.Email;
+    user.Telephone = request.Telefone;
+    user.Address = request.Endereco;
+
+    dbContext.SaveChanges();
+    }
+
 }

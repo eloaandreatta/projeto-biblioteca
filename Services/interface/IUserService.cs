@@ -1,5 +1,8 @@
+
+using pBiblioteca.DTO;
+
 public interface IUserService
 {
-    public List<UserResponseDTO> GetUsers();
-     public string UpdateUserPassword(string Cpf, string password);
+    List<UserResponseDTO> GetUsers();
+    string UpdateUser(string cpf, UpdateUserRequestDTO request);
 }

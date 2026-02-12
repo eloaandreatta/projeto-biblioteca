@@ -1,6 +1,7 @@
 using pBiblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using pBiblioteca.DTO;
 
 namespace pBiblioteca.Controllers;
 
@@ -22,16 +23,16 @@ public class UserController : ControllerBase
     {
         return _service.GetUsers();
     }
- 
-    [HttpPut("{Cpf}", Name = "UpdateUserPassword")]
-    public IActionResult UpdateUser([FromRoute] string Cpf, [FromBody] UpdateUserRequest request){
-       string error = _service.UpdateUserPassword(Cpf, request.Senha);
 
-        if(error == "error"){
-            return BadRequest();
-        }
-        
+    [HttpPut("{cpf}")]
+    public IActionResult UpdateUser(string cpf, [FromBody] UpdateUserRequestDTO request)
+    {
+    string result = _service.UpdateUser(cpf, request);
+
+    if (result == "error")
+        return NotFound();
         return Ok();
     }
+
 
 }
