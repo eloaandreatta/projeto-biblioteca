@@ -1,6 +1,5 @@
 using pBiblioteca.Models;
-namespace pBiblioteca.DTO;
-
+using pBiblioteca.DTO;
 
 // responsavel por toda logica do EndPoint
 // Conecta ao repositorio
@@ -13,48 +12,79 @@ public class UserService : IUserService
         _repository = repository;
     }
 
+
+    // CONSULTAR CADASTRO
     public List<UserResponseDTO> GetUsers()
     {
         List<TbUser> tbUsers = _repository.SelectUsers();
 
-        // crio uma lista com o tipo que quero do retorno
         List<UserResponseDTO> usersDTO = new List<UserResponseDTO>();
 
-        // percorre a tabela de usuarios
-        foreach(TbUser tbUser in tbUsers)
+        foreach (TbUser tbUser in tbUsers)
         {
-            // cria um usuario com tipo do meu retorno
             UserResponseDTO usuarioRetorno = new UserResponseDTO();
+
             usuarioRetorno.Cpf = tbUser.Cpf;
             usuarioRetorno.Nome = tbUser.Name;
             usuarioRetorno.Email = tbUser.Email;
             usuarioRetorno.Telefone = tbUser.Telephone;
             usuarioRetorno.Endereco = tbUser.Address;
 
-            // adiciona o usuario a minha lista de retorno
             usersDTO.Add(usuarioRetorno);
-            // UserResponseDTO userDTO = new UserResponseDTO()
-            // {
-            //     Id = tbUser.Id,
-            //     Nome = tbUser.Name,
-            //     Email = tbUser.Email
-            // };
-            // usersDTO.Add(userDTO);
         }
 
-        // retorna a lista que eu criei
         return usersDTO;
     }
 
+    // CRIAR CADASTRO
+    public string CreateUser(CreateUserRequestDTO request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Cpf))
+            return "CPF é obrigatório.";
+
+        if (string.IsNullOrWhiteSpace(request.Nome))
+            return "Nome é obrigatório.";
+
+        if (!request.Email.Contains("@"))
+            return "Email inválido.";
+
+        var existingUser = _repository.GetUserById(request.Cpf);
+
+        if (existingUser != null)
+            return "Usuário já cadastrado.";
+
+        var existingTelephone = _repository.GetUserByTelephone(request.Telefone);
+
+        if (existingTelephone != null)
+            return "Telefone já cadastrado.";
+
+        TbUser user = new TbUser
+        {
+            Cpf = request.Cpf,
+            Name = request.Nome,
+            Email = request.Email,
+            Telephone = request.Telefone,
+            Address = request.Endereco,
+            Password = request.Senha,
+            Active = true
+        };
+
+        _repository.AddUser(user);
+
+        return "Usuário cadastrado com sucesso.";
+    }
+
+
+    // ATUALIZAR CADASTRO
     public string UpdateUser(string cpf, UpdateUserRequestDTO request)
     {
         TbUser? user = _repository.GetUserById(cpf);
 
-            if (user == null)
+        if (user == null)
             return "error";
 
-            _repository.UpdateUserData(cpf, request);
-            return "";
-    }
+        _repository.UpdateUserData(cpf, request);
 
+        return "ok";
+    }
 }

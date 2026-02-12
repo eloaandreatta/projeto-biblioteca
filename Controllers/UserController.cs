@@ -1,38 +1,46 @@
 using pBiblioteca.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using pBiblioteca.DTO;
 
 namespace pBiblioteca.Controllers;
 
-// Responsavel apenas por receber e enviar dados pro cliente
-// Conecta ao Service
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private IUserService _service;
+    private readonly IUserService _service;
 
     public UserController(IUserService service)
     {
         _service = service;
     }
 
-    [HttpGet(Name = "GetAllUsers")]
+    [HttpGet]
     public List<UserResponseDTO> Get()
     {
         return _service.GetUsers();
     }
 
+    [HttpPost]
+    public IActionResult CreateUser([FromBody] CreateUserRequestDTO request)
+    {
+        string result = _service.CreateUser(request);
+
+        if (result.Contains("sucesso"))
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+
     [HttpPut("{cpf}")]
     public IActionResult UpdateUser(string cpf, [FromBody] UpdateUserRequestDTO request)
     {
-    string result = _service.UpdateUser(cpf, request);
+        string result = _service.UpdateUser(cpf, request);
 
-    if (result == "error")
-        return NotFound();
-        return Ok();
+        if (result.Contains("não encontrado"))
+            return NotFound(result);
+
+        return Ok(result);
     }
-
-
 }
+

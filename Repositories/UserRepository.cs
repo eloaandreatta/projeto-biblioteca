@@ -14,40 +14,38 @@ public class UserRepository : IUserRepository
 
     public List<TbUser> SelectUsers()
     {
-         List<TbUser> tbUsers = dbContext.TbUsers.ToList();
-         return tbUsers;
+        return dbContext.TbUsers.ToList();
     }
 
-    public List<TbUser> SelectUsersWithOrders()
+    public TbUser? GetUserById(string cpf)
     {
-        List<TbUser> tbUsers = dbContext.TbUsers.Include(u => u.TbReservations).ToList();
-        return tbUsers;
+        return dbContext.TbUsers.Find(cpf);
     }
 
-    public TbUser? GetUserById(string Cpf){
-        TbUser? findedUser = dbContext.TbUsers.Find(Cpf);
-        return findedUser;
+    public TbUser? GetUserByTelephone(string telephone)
+    {
+        return dbContext.TbUsers
+            .FirstOrDefault(u => u.Telephone == telephone);
     }
 
-    public void UpdateUser(string Cpf, string newPassword){
-        TbUser? findedUser = dbContext.TbUsers.Find(Cpf);
-        findedUser.Password = newPassword;
+    public void AddUser(TbUser user)
+    {
+        dbContext.TbUsers.Add(user);
         dbContext.SaveChanges();
     }
 
-
     public void UpdateUserData(string cpf, UpdateUserRequestDTO request)
     {
-    TbUser? user = dbContext.TbUsers.Find(cpf);
+        TbUser? user = dbContext.TbUsers.Find(cpf);
 
-    if (user == null) return;
+        if (user == null)
+            return;
 
-    user.Name = request.Nome;
-    user.Email = request.Email;
-    user.Telephone = request.Telefone;
-    user.Address = request.Endereco;
+        user.Name = request.Nome;
+        user.Email = request.Email;
+        user.Telephone = request.Telefone;
+        user.Address = request.Endereco;
 
-    dbContext.SaveChanges();
+        dbContext.SaveChanges();
     }
-
 }
