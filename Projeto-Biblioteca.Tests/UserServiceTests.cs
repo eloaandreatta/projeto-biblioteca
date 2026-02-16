@@ -27,7 +27,7 @@ namespace Projeto_Biblioteca.Tests
             // Arrange
             string cpf = "12345678900";
 
-            // configurando o comportamento do mock.
+            // configurando o comportamento do mock
             // "Quando GetUserById for chamado com esse CPF, retorne um usuário (ou seja, finja que ele existe no banco)"
 
             _mockRepository
