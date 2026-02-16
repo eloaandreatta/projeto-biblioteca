@@ -15,8 +15,13 @@ builder.Services.AddDbContext<PostgresContext>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+
+builder.Services.AddScoped<ILoanService, LoanService>();
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+
 
 var app = builder.Build();
 
