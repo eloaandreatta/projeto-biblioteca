@@ -4,6 +4,7 @@ using pBiblioteca.Services;
 using pBiblioteca.Repositories;
 using pBiblioteca.Models;
 using pBiblioteca.DTO;
+using System.Collections.Generic;
 
 namespace Projeto_Biblioteca.Tests
 {
@@ -13,73 +14,266 @@ namespace Projeto_Biblioteca.Tests
         private Mock<IUserRepository> _mockRepository;
         private UserService _service;
 
+        // Executa antes de cada teste
         [SetUp]
         public void Setup()
         {
+            // Cria um repositório falso (mock)
             _mockRepository = new Mock<IUserRepository>();
+
+            // Injeta o mock no service real
             _service = new UserService(_mockRepository.Object);
         }
 
-        // Se usuário existe: Atualiza - Retorna ok
+        // ===============================
+        // GET USERS
+        // ===============================
+
         [Test]
-        public void UpdateUser_DeveRetornarOk_QuandoUsuarioExistir()
+        public void GetUsers_DeveRetornarListaMapeada()
         {
-            // Arrange
-            string cpf = "12345678900";
-
-            // configurando o comportamento do mock
-            // "Quando GetUserById for chamado com esse CPF, retorne um usuário (ou seja, finja que ele existe no banco)"
-
-            _mockRepository
-                .Setup(r => r.GetUserById(cpf))
-                .Returns(new TbUser { Cpf = cpf });
-
-            var request = new UpdateUserRequestDTO
+            // Arrange - Simula usuários vindos do banco
+            var tbUsers = new List<TbUser>
             {
-                Nome = "Novo Nome",
-                Email = "novo@email.com",
-                Telefone = "11999999999",
-                Endereco = "Novo endereço"
+                new TbUser { Cpf="1", Name="A", Email="a@email.com", Telephone="111", Address="Rua 1" },
+                new TbUser { Cpf="2", Name="B", Email="b@email.com", Telephone="222", Address="Rua 2" }
+            };
+
+            // Define comportamento do mock
+            _mockRepository.Setup(r => r.SelectUsers()).Returns(tbUsers);
+
+            // Act - Executa método real
+            var result = _service.GetUsers();
+
+            // Assert - Verifica se o mapeamento foi feito corretamente
+            Assert.That(result.Count, Is.EqualTo(2));
+            Assert.That(result[0].Cpf, Is.EqualTo("1"));
+            Assert.That(result[0].Nome, Is.EqualTo("A"));
+        }
+
+        [Test]
+        public void GetUsers_DeveRetornarListaVazia()
+        {
+            // Arrange - Simula banco vazio
+            _mockRepository.Setup(r => r.SelectUsers())
+                           .Returns(new List<TbUser>());
+
+            // Act
+            var result = _service.GetUsers();
+
+            // Assert - Deve retornar lista vazia
+            Assert.That(result.Count, Is.EqualTo(0));
+        }
+
+        // ===============================
+        // CREATE USER
+        // ===============================
+
+        [Test]
+        public void CreateUser_DeveRetornarErro_QuandoCpfVazio()
+        {
+            // Arrange - CPF inválido
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "",
+                Nome = "Nome",
+                Email = "email@email.com",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
             };
 
             // Act
-            // executamos o método real do serviço
-            var resultado = _service.UpdateUser(cpf, request);
+            var result = _service.CreateUser(request);
 
-            // Assert
-            // Verifica se o retorno foi "ok"
-            Assert.That(resultado, Is.EqualTo("ok"));
-
-            // Verifica se o método UpdateUserData foi chamado 1 vez
-            _mockRepository.Verify(
-                r => r.UpdateUserData(cpf, request),
-                Times.Once);
+            // Assert - Deve barrar antes de acessar o repositório
+            Assert.That(result, Is.EqualTo("CPF é obrigatório."));
         }
 
-        // Se usuário não existe: Não atualiza - Retorna error
         [Test]
-        public void UpdateUser_DeveRetornarError_QuandoUsuarioNaoExistir()
+        public void CreateUser_DeveRetornarErro_QuandoNomeVazio()
         {
-            // Arrange
-            // "Quando procurar o usuário, retorne null" - Ou seja, finja que ele NÃO existe no banco
-            string cpf = "12345678900";
+            // Arrange - Nome inválido
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "123",
+                Nome = "",
+                Email = "email@email.com",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
+            };
 
-            _mockRepository
-                .Setup(r => r.GetUserById(cpf))
-                .Returns((TbUser)null);
-
-            var request = new UpdateUserRequestDTO();
-
-            // Act
-            var resultado = _service.UpdateUser(cpf, request);
+            var result = _service.CreateUser(request);
 
             // Assert
-            // Verifica que o método UpdateUserData NUNCA foi chamado
-            Assert.That(resultado, Is.EqualTo("error"));
+            Assert.That(result, Is.EqualTo("Nome é obrigatório."));
+        }
 
-            _mockRepository.Verify(
-                r => r.UpdateUserData(It.IsAny<string>(), It.IsAny<UpdateUserRequestDTO>()),
-                Times.Never);
+        [Test]
+        public void CreateUser_DeveRetornarErro_QuandoEmailInvalido()
+        {
+            // Arrange - Email sem "@"
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "123",
+                Nome = "Nome",
+                Email = "emailinvalido",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
+            };
+
+            var result = _service.CreateUser(request);
+
+            // Assert
+            Assert.That(result, Is.EqualTo("Email inválido."));
+        }
+
+        [Test]
+        public void CreateUser_DeveRetornarErro_QuandoUsuarioJaExiste()
+        {
+            // Arrange - Simula CPF já cadastrado
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "123",
+                Nome = "Nome",
+                Email = "email@email.com",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
+            };
+
+            _mockRepository.Setup(r => r.GetUserById("123"))
+                           .Returns(new TbUser());
+
+            var result = _service.CreateUser(request);
+
+            // Assert - Não deve permitir duplicidade
+            Assert.That(result, Is.EqualTo("Usuário já cadastrado."));
+        }
+
+        [Test]
+        public void CreateUser_DeveRetornarErro_QuandoTelefoneJaExiste()
+        {
+            // Arrange - CPF não existe, mas telefone já existe
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "123",
+                Nome = "Nome",
+                Email = "email@email.com",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
+            };
+
+            _mockRepository.Setup(r => r.GetUserById("123"))
+                           .Returns((TbUser)null);
+
+            _mockRepository.Setup(r => r.GetUserByTelephone("111"))
+                           .Returns(new TbUser());
+
+            var result = _service.CreateUser(request);
+
+            // Assert
+            Assert.That(result, Is.EqualTo("Telefone já cadastrado."));
+        }
+
+        [Test]
+        public void CreateUser_DeveCadastrarERetornarSucesso()
+        {
+            // Arrange - Usuário válido e inexistente
+            var request = new CreateUserRequestDTO
+            {
+                Cpf = "123",
+                Nome = "Nome",
+                Email = "email@email.com",
+                Telefone = "111",
+                Endereco = "Rua",
+                Senha = "123"
+            };
+
+            _mockRepository.Setup(r => r.GetUserById("123"))
+                           .Returns((TbUser)null);
+
+            _mockRepository.Setup(r => r.GetUserByTelephone("111"))
+                           .Returns((TbUser)null);
+
+            var result = _service.CreateUser(request);
+
+            // Assert - Deve salvar no repositório
+            Assert.That(result, Is.EqualTo("Usuário cadastrado com sucesso."));
+            _mockRepository.Verify(r => r.AddUser(It.IsAny<TbUser>()), Times.Once);
+        }
+
+        // ===============================
+        // UPDATE USER
+        // ===============================
+
+        [Test]
+        public void UpdateUser_DeveRetornarOk()
+        {
+            string cpf = "123";
+
+            // Simula usuário existente
+            _mockRepository.Setup(r => r.GetUserById(cpf))
+                           .Returns(new TbUser());
+
+            var result = _service.UpdateUser(cpf, new UpdateUserRequestDTO());
+
+            // Deve atualizar e retornar ok
+            Assert.That(result, Is.EqualTo("ok"));
+            _mockRepository.Verify(r => r.UpdateUserData(cpf, It.IsAny<UpdateUserRequestDTO>()), Times.Once);
+        }
+
+        [Test]
+        public void UpdateUser_DeveRetornarError_QuandoNaoExistir()
+        {
+            string cpf = "123";
+
+            // Simula usuário inexistente
+            _mockRepository.Setup(r => r.GetUserById(cpf))
+                           .Returns((TbUser)null);
+
+            var result = _service.UpdateUser(cpf, new UpdateUserRequestDTO());
+
+            // Não deve atualizar
+            Assert.That(result, Is.EqualTo("error"));
+        }
+
+        // ===============================
+        // DELETE USER
+        // ===============================
+
+        [Test]
+        public void DeleteUser_DeveRetornarNaoEncontrado()
+        {
+            string cpf = "123";
+
+            // Simula usuário inexistente
+            _mockRepository.Setup(r => r.GetUserById(cpf))
+                           .Returns((TbUser)null);
+
+            var result = _service.DeleteUser(cpf);
+
+            // Deve informar que não encontrou
+            Assert.That(result, Is.EqualTo("não encontrado"));
+        }
+
+        [Test]
+        public void DeleteUser_DeveRetornarOk()
+        {
+            string cpf = "123";
+
+            // Simula usuário existente
+            _mockRepository.Setup(r => r.GetUserById(cpf))
+                           .Returns(new TbUser());
+
+            var result = _service.DeleteUser(cpf);
+
+            // Deve remover e retornar ok
+            Assert.That(result, Is.EqualTo("ok"));
+            _mockRepository.Verify(r => r.DeleteUser(cpf), Times.Once);
         }
     }
 }
