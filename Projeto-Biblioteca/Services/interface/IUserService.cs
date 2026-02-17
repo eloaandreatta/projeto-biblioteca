@@ -7,4 +7,6 @@ public interface IUserService
     string CreateUser(CreateUserRequestDTO request);
 
     string UpdateUser(string cpf, UpdateUserRequestDTO request);
+
+    string DeleteUser(string cpf); 
 }

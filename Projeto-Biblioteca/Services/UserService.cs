@@ -90,6 +90,22 @@ namespace pBiblioteca.Services
 
             return "ok";
         }
-    }
+        
+        // DELETAR CADASTRO
+        public string DeleteUser(string cpf)
+        {
+            TbUser? user = _repository.GetUserById(cpf);
+
+            if (user == null)
+                return "não encontrado";
+
+            _repository.DeleteUser(cpf);
+
+            return "ok";
+        }
+       
+        }
+
 }
+
 

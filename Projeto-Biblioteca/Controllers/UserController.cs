@@ -42,5 +42,16 @@ public class UserController : ControllerBase
 
         return Ok(result);
     }
-}
 
+    [HttpDelete("{cpf}")]
+    public IActionResult DeleteUser(string cpf)
+    {
+        string result = _service.DeleteUser(cpf);
+
+        if (result.Contains("não encontrado"))
+            return NotFound(result);
+
+        return Ok(result);
+    }
+    
+}

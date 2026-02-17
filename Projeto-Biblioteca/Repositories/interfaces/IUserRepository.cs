@@ -12,6 +12,9 @@ using pBiblioteca.Models;
     void AddUser(TbUser user);
 
     void UpdateUserData(string cpf, UpdateUserRequestDTO request);
+
+    void DeleteUser(string cpf);
+
 }
 
 

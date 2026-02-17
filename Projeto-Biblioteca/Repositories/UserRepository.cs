@@ -50,5 +50,19 @@ public class UserRepository : IUserRepository
 
         dbContext.SaveChanges();
     }
+
+    public void DeleteUser(string cpf)
+    {
+        TbUser? user = dbContext.TbUsers.Find(cpf);
+
+        if (user == null)
+            return;
+
+        dbContext.TbUsers.Remove(user);
+        dbContext.SaveChanges();
+    }
+
+    
+
 }
 }
