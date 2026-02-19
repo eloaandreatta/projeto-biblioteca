@@ -4,10 +4,26 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
-          <Format>cobertura</Format>
+
+          <!-- Excluir arquivos/pastas que não fazem sentido testar unitariamente -->
+          <ExcludeByFile>
+            **/Program.cs
+            **/*Context.cs
+            **/Models/PostgresContext.cs
+            **/obj/**
+            **/bin/**
+            **/*generated.cs
+            **/Migrations/**
+            **/WeatherForecast.cs
+          </ExcludeByFile>
+
+          <Exclude>
+            [pBiblioteca]*.Repositories.*
+            [pBiblioteca]*.Models.*
+          </Exclude>
+
         </Configuration>
       </DataCollector>
     </DataCollectors>
   </DataCollectionRunSettings>
-  <Exclude>[pBiblioteca]pBiblioteca.Models.*,[pBiblioteca]pBiblioteca.DTO.*</Exclude>
 </RunSettings>

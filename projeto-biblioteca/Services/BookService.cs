@@ -70,7 +70,8 @@ public class BookService : IBookService
         if (request.PublicationYear <= 0) return "error";
         if (request.TotalQuantity < 0) return "error";
         if (request.AvailableQuantity < 0) return "error";
-        if (request.AvailableQuantity > request.AvailableQuantity) return "error";
+        if (request.AvailableQuantity > request.TotalQuantity) return "error";
+
 
         string isbn = request.Isbn.Trim();
 
