@@ -25,3 +25,4 @@ public partial class TbFine
 
     public virtual TbUser UserCpfNavigation { get; set; } = null!;
 }
+
