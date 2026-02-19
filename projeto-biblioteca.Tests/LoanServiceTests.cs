@@ -18,39 +18,40 @@ public class LoanServiceTests
     [Test]
     public void CreateLoan_DadosValidos_DeveRetornarSucesso()
     {
-        // Arrange -> Preparação
-        // Criamos um request válido para simular a criação de empréstimo
+        // Arrange
         var request = new CreateLoanRequest
         {
             UserCpf = "12345678900",
             BookIsbn = "9781234567890"
         };
 
-        // Configuramos o mock:
-        // Quando InsertLoan for chamado com qualquer parametro válido, ele deve retornar true (simulando sucesso no banco)
-        _repositoryMock
-            .Setup(x => x.InsertLoan(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<DateOnly>(),
-                It.IsAny<DateOnly>()))
-            .Returns(true);
+        _repositoryMock.Setup(x => x.GetUserByCpf(request.UserCpf))
+                    .Returns(new TbUser { Cpf = request.UserCpf, Active = true });
 
-        // Act -> Execução
-        var resultado = _service.CreateLoan(request);
+        _repositoryMock.Setup(x => x.UserHasActiveLoan(request.UserCpf)).Returns(false);
+        _repositoryMock.Setup(x => x.UserHasUnpaidFine(request.UserCpf)).Returns(false);
 
-        // Assert
-        // Verifica se o retorno foi string vazia, que no caso significa sucesso
-        Assert.That(resultado, Is.EqualTo(""));
-        // Verificamos se o método InsertLoan do repository foi chamado exatamente 1 vez
-        // giIsso garante que a service realmente tentou salvar no banco
-        _repositoryMock.Verify(
-        x => x.InsertLoan(
+        _repositoryMock.Setup(x => x.GetBookByIsbn(request.BookIsbn))
+                    .Returns(new TbBook { Isbn = request.BookIsbn, Availablequantity = 1 });
+
+        _repositoryMock.Setup(x => x.InsertLoan(
             It.IsAny<string>(),
             It.IsAny<string>(),
             It.IsAny<DateOnly>(),
-            It.IsAny<DateOnly>()),
-        Times.Once);
+            It.IsAny<DateOnly>()))
+            .Returns(true);
 
+        // Act
+        var resultado = _service.CreateLoan(request);
+
+        // Assert
+        Assert.That(resultado, Is.EqualTo(""));
+
+        _repositoryMock.Verify(x => x.InsertLoan(
+            It.IsAny<string>(),
+            It.IsAny<string>(),
+            It.IsAny<DateOnly>(),
+            It.IsAny<DateOnly>()), Times.Once);
     }
+
 }

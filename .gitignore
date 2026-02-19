@@ -6,3 +6,4 @@ coveragereport
 TestResults
 .vs/
 projeto-biblioteca\Models\PostgresContext.cs
+projeto-biblioteca\appsettings.json
