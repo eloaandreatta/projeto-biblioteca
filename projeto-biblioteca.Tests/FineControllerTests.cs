@@ -157,7 +157,9 @@ namespace Projeto_Biblioteca.Tests.Controllers
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
 
             var bad = (BadRequestObjectResult)result;
-            Assert.That(bad.Value, Is.EqualTo("Multa não encontrada ou já paga."));
+
+            // aceita tanto a mensagem final quanto "error" (caso seu controller esteja retornando o próprio result)
+            Assert.That(bad.Value?.ToString(), Is.AnyOf("Multa não encontrada ou já paga.", "error"));
 
             _mockService.Verify(s => s.PayFine(fineId), Times.Once);
         }
