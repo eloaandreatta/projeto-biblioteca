@@ -6,4 +6,5 @@ public interface ILoanService
     LoanResponseDTO? GetLoanById(int id);
     string CreateLoan(CreateLoanRequest request);
     string ReturnLoan(int id);
+
 }

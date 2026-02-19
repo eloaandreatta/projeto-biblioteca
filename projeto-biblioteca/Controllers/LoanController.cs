@@ -18,10 +18,11 @@ public class LoanController : ControllerBase
 
     //GET LOAN
     [HttpGet(Name = "GetAllLoans")]
-    public List<LoanResponseDTO> Get()
+    public IActionResult Get()
     {
-        return _service.GetLoans();
+        return Ok(_service.GetLoans());
     }
+
 
      // GET /Loan/{id}
     [HttpGet("{id}")]
@@ -44,7 +45,8 @@ public class LoanController : ControllerBase
         if (error == "error")
             return BadRequest();
 
-        return Ok();
+        return Created("", null);
+
     }
 
     // PUT /Loan/{id}/return

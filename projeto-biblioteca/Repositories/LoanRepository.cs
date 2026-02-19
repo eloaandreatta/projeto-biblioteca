@@ -15,7 +15,9 @@ public class LoanRepository : ILoanRepository
     // =========================
     public List<TbLoan> SelectLoans()
     {
-        return _context.TbLoans.ToList();
+        return _context.TbLoans
+        .OrderByDescending(l => l.Id)
+        .ToList();
     }
 
     // =========================
@@ -37,12 +39,10 @@ public class LoanRepository : ILoanRepository
             BookIsbn = bookIsbn,
             Loandate = loanDate,
             Duedate = dueDate,
-            Returndate = null,
             Status = true
         };
 
         _context.TbLoans.Add(loan);
-        _context.SaveChanges();
 
         return true;
     }
@@ -60,7 +60,37 @@ public class LoanRepository : ILoanRepository
         loan.Returndate = returnDate;
         loan.Status = status;
 
-        _context.SaveChanges();
         return true;
     }
+
+    public TbUser? GetUserByCpf(string cpf)
+    {
+        return _context.TbUsers.FirstOrDefault(u => u.Cpf == cpf);
+    }
+
+    public TbBook? GetBookByIsbn(string isbn)
+    {
+        return _context.TbBooks.FirstOrDefault(b => b.Isbn == isbn);
+    }
+
+    public bool UserHasActiveLoan(string cpf)
+    {
+        return _context.TbLoans.Any(l => l.UserCpf == cpf && l.Status == true);
+    }
+
+    public bool UserHasUnpaidFine(string cpf)
+    {
+        return _context.TbFines.Any(f => f.UserCpf == cpf && !f.Ispaid);
+    }
+
+    public void AddFine(TbFine fine)
+    {
+        _context.TbFines.Add(fine);
+    }
+
+    public void Save()
+    {
+        _context.SaveChanges();
+    }
+
 }
