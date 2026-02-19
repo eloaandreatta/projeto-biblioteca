@@ -12,5 +12,5 @@ public class FineResponseDTO
     public bool IsPaid { get; set; }
     public decimal DailyRate { get; set; }
 
-    public DateOnly PaymentDate { get; set; }
+    public DateOnly? PaymentDate { get; set; }
 }
