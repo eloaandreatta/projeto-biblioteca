@@ -89,11 +89,3 @@ Utilizando:
 
 - NUnit
 - Moq
-
----
-
-Projeto desenvolvido para fins acadêmicos (TCC).
-EOF
-
-echo "README.md criado com sucesso!"
-
