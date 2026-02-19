@@ -14,8 +14,6 @@ builder.Services.AddEndpointsApiExplorer();
 // Banco (PostgreSQL) 
 builder.Services.AddDbContext<PostgresContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
-    options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
