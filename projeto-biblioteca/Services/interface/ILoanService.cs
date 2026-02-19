@@ -8,5 +8,7 @@ public interface ILoanService
     public string CreateLoan(CreateLoanRequest request);
     string ReturnLoan(int id);
     string RenewLoan(int id);
+    public IEnumerable<LoanResponseDTO> GetActiveLoansByUser(string cpf);
+    public IEnumerable<LoanResponseDTO> GetLoanHistoryByUser(string cpf);
 
 }

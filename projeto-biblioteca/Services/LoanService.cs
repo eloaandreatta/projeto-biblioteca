@@ -231,4 +231,39 @@ public class LoanService : ILoanService
         _repository.Save();
         return "ok";
     }
+
+   public IEnumerable<LoanResponseDTO> GetActiveLoansByUser(string cpf)
+    {
+        var loans = _repository.GetLoansByUserCpf(cpf)
+                            .Where(l => l.Status == true);
+
+        return loans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        });
+    }
+
+    public IEnumerable<LoanResponseDTO> GetLoanHistoryByUser(string cpf)
+    {
+        var loans = _repository.GetLoansByUserCpf(cpf)
+                            .Where(l => l.Status == false);
+
+        return loans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        });
+    }
+    
 }
