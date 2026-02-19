@@ -48,7 +48,7 @@ namespace Projeto_Biblioteca.Tests
             // Assert - Verifica se o mapeamento foi feito corretamente
             Assert.That(result.Count, Is.EqualTo(2));
             Assert.That(result[0].Cpf, Is.EqualTo("1"));
-            Assert.That(result[0].Nome, Is.EqualTo("A"));
+            Assert.That(result[0].Name, Is.EqualTo("A"));
         }
 
         [Test]
@@ -76,11 +76,11 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "",
-                Nome = "Nome",
+                Name = "Nome",
                 Email = "email@email.com",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             // Act
@@ -97,11 +97,11 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "123",
-                Nome = "",
+                Name = "",
                 Email = "email@email.com",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             var result = _service.CreateUser(request);
@@ -117,11 +117,11 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "123",
-                Nome = "Nome",
+                Name = "Nome",
                 Email = "emailinvalido",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             var result = _service.CreateUser(request);
@@ -137,11 +137,11 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "123",
-                Nome = "Nome",
+                Name = "Nome",
                 Email = "email@email.com",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             _mockRepository.Setup(r => r.GetUserById("123"))
@@ -160,15 +160,15 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "123",
-                Nome = "Nome",
+                Name = "Nome",
                 Email = "email@email.com",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             _mockRepository.Setup(r => r.GetUserById("123"))
-                           .Returns((TbUser)null);
+                           .Returns((TbUser)null!);
 
             _mockRepository.Setup(r => r.GetUserByTelephone("111"))
                            .Returns(new TbUser());
@@ -176,7 +176,7 @@ namespace Projeto_Biblioteca.Tests
             var result = _service.CreateUser(request);
 
             // Assert
-            Assert.That(result, Is.EqualTo("Telefone já cadastrado."));
+            Assert.That(result, Is.EqualTo("Telefone já cadastrado"));
         }
 
         [Test]
@@ -186,18 +186,18 @@ namespace Projeto_Biblioteca.Tests
             var request = new CreateUserRequestDTO
             {
                 Cpf = "123",
-                Nome = "Nome",
+                Name = "Nome",
                 Email = "email@email.com",
-                Telefone = "111",
-                Endereco = "Rua",
-                Senha = "123"
+                Telephone = "111",
+                Address = "Rua",
+                Password = "123"
             };
 
             _mockRepository.Setup(r => r.GetUserById("123"))
-                           .Returns((TbUser)null);
+                           .Returns((TbUser)null!);
 
             _mockRepository.Setup(r => r.GetUserByTelephone("111"))
-                           .Returns((TbUser)null);
+                           .Returns((TbUser)null!);
 
             var result = _service.CreateUser(request);
 
@@ -233,7 +233,7 @@ namespace Projeto_Biblioteca.Tests
 
             // Simula usuário inexistente
             _mockRepository.Setup(r => r.GetUserById(cpf))
-                           .Returns((TbUser)null);
+                           .Returns((TbUser)null!);
 
             var result = _service.UpdateUser(cpf, new UpdateUserRequestDTO());
 
@@ -252,7 +252,7 @@ namespace Projeto_Biblioteca.Tests
 
             // Simula usuário inexistente
             _mockRepository.Setup(r => r.GetUserById(cpf))
-                           .Returns((TbUser)null);
+                           .Returns((TbUser)null!);
 
             var result = _service.DeleteUser(cpf);
 

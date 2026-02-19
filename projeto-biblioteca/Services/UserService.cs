@@ -59,7 +59,7 @@ namespace pBiblioteca.Services
             var existingTelephone = _repository.GetUserByTelephone(request.Telephone);
 
             if (existingTelephone != null)
-                return "Telefone já cadastrado.";
+                return "Telefone já cadastrado";
 
             TbUser user = new TbUser
             {

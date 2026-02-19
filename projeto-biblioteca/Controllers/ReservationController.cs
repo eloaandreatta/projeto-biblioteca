@@ -26,8 +26,8 @@ public class ReservationController : ControllerBase
         return Ok();
     }
 
-    [HttpDelete("{id:long}")]
-    public IActionResult Cancel([FromRoute] long id)
+    [HttpDelete("{id:int}")]
+    public IActionResult Cancel([FromRoute] int id)
     {
         var result = _service.CancelReservation(id);
 

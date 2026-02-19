@@ -10,7 +10,7 @@ public class ReservationRepository : IReservationRepository
         _dbContext = context;
     }
 
-    public TbReservation? GetById(long id)
+    public TbReservation? GetById(int id)
     {
         int rid = checked((int)id);
         return _dbContext.TbReservations.FirstOrDefault(r => r.Id == rid);
@@ -41,7 +41,7 @@ public class ReservationRepository : IReservationRepository
             .ToList();
     }
 
-    public int CountActiveBefore(string isbn, DateOnly reservationDate, long reservationId)
+    public int CountActiveBefore(string isbn, DateOnly reservationDate, int reservationId)
     {
         int rid = checked((int)reservationId);
 

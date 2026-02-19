@@ -54,7 +54,7 @@ public class BookServiceTests
         // Assert
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0].Isbn, Is.EqualTo("1"));
-        Assert.That(result[0].Titulo, Is.EqualTo("A"));
+        Assert.That(result[0].Title, Is.EqualTo("A"));
         _repoMock.Verify(r => r.SelectBooks(), Times.Once);
     }
 

@@ -213,36 +213,44 @@ var assemblies = [
   {
     "name": "pBiblioteca",
     "classes": [
+      { "name": "BookRepository", "rp": "pBiblioteca_BookRepository.html", "cl": 0, "ucl": 25, "cal": 25, "tl": 49, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "BookService", "rp": "pBiblioteca_BookService.html", "cl": 22, "ucl": 44, "cal": 66, "tl": 94, "cb": 2, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "CreateUserRequestDTO", "rp": "pBiblioteca_CreateUserRequestDTO.html", "cl": 6, "ucl": 0, "cal": 6, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "FineRepository", "rp": "pBiblioteca_FineRepository.html", "cl": 0, "ucl": 54, "cal": 54, "tl": 80, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "FineService", "rp": "pBiblioteca_FineService.html", "cl": 49, "ucl": 42, "cal": 91, "tl": 130, "cb": 16, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "LoanService", "rp": "pBiblioteca_LoanService.html", "cl": 10, "ucl": 128, "cal": 138, "tl": 223, "cb": 3, "tb": 46, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "LoanRepository", "rp": "pBiblioteca_LoanRepository.html", "cl": 0, "ucl": 63, "cal": 63, "tl": 121, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "LoanService", "rp": "pBiblioteca_LoanService.html", "cl": 26, "ucl": 112, "cal": 138, "tl": 223, "cb": 8, "tb": 46, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Microsoft.AspNetCore.OpenApi.Generated", "rp": "pBiblioteca_Generated.html", "cl": 0, "ucl": 373, "cal": 373, "tl": 591, "cb": 0, "tb": 204, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Controllers.BookController", "rp": "pBiblioteca_BookController.html", "cl": 0, "ucl": 19, "cal": 19, "tl": 51, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Controllers.FineController", "rp": "pBiblioteca_FineController.html", "cl": 18, "ucl": 0, "cal": 18, "tl": 44, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Controllers.LoanController", "rp": "pBiblioteca_LoanController.html", "cl": 0, "ucl": 37, "cal": 37, "tl": 88, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Controllers.ReservationController", "rp": "pBiblioteca_ReservationController.html", "cl": 0, "ucl": 21, "cal": 21, "tl": 51, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "pBiblioteca.Controllers.UserController", "rp": "pBiblioteca_UserController.html", "cl": 0, "ucl": 13, "cal": 13, "tl": 37, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Controllers.UserController", "rp": "pBiblioteca_UserController.html", "cl": 0, "ucl": 33, "cal": 33, "tl": 57, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.DTO.FineResponseDTO", "rp": "pBiblioteca_FineResponseDTO.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 16, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.BookResponseDTO", "rp": "pBiblioteca_BookResponseDTO.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.CreateBookRequest", "rp": "pBiblioteca_CreateBookRequest.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.CreateLoanRequest", "rp": "pBiblioteca_CreateLoanRequest.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "pBiblioteca.Models.CreateReservationRequest", "rp": "pBiblioteca_CreateReservationRequest.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Models.CreateReservationRequest", "rp": "pBiblioteca_CreateReservationRequest.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.LoanResponseDTO", "rp": "pBiblioteca_LoanResponseDTO.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.PostgresContext", "rp": "pBiblioteca_PostgresContext.html", "cl": 0, "ucl": 163, "cal": 163, "tl": 195, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "pBiblioteca.Models.ReservationResponseDTO", "rp": "pBiblioteca_ReservationResponseDTO.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Models.ReservationResponseDTO", "rp": "pBiblioteca_ReservationResponseDTO.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.TbBook", "rp": "pBiblioteca_TbBook.html", "cl": 9, "ucl": 0, "cal": 9, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.TbFine", "rp": "pBiblioteca_TbFine.html", "cl": 10, "ucl": 0, "cal": 10, "tl": 28, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.TbLoan", "rp": "pBiblioteca_TbLoan.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.TbReservation", "rp": "pBiblioteca_TbReservation.html", "cl": 0, "ucl": 7, "cal": 7, "tl": 21, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.Models.TbReservationBook", "rp": "pBiblioteca_TbReservationBook.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 15, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "pBiblioteca.Models.TbUser", "rp": "pBiblioteca_TbUser.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 31, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "pBiblioteca.Services.ReservationService", "rp": "pBiblioteca_ReservationService.html", "cl": 0, "ucl": 73, "cal": 73, "tl": 109, "cb": 0, "tb": 30, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Models.TbUser", "rp": "pBiblioteca_TbUser.html", "cl": 10, "ucl": 2, "cal": 12, "tl": 31, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Repositories.UserRepository", "rp": "pBiblioteca_UserRepository.html", "cl": 0, "ucl": 35, "cal": 35, "tl": 68, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Services.ReservationService", "rp": "pBiblioteca_ReservationService.html", "cl": 0, "ucl": 76, "cal": 76, "tl": 109, "cb": 0, "tb": 34, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "pBiblioteca.Services.UserService", "rp": "pBiblioteca_UserService.html", "cl": 59, "ucl": 0, "cal": 59, "tl": 109, "cb": 16, "tb": 16, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "pBiblioteca.WeatherForecast", "rp": "pBiblioteca_WeatherForecast.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Program", "rp": "pBiblioteca_Program.html", "cl": 0, "ucl": 23, "cal": 23, "tl": 47, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Program", "rp": "pBiblioteca_Program.html", "cl": 0, "ucl": 35, "cal": 35, "tl": 41, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "ReservationRepository", "rp": "pBiblioteca_ReservationRepository.html", "cl": 0, "ucl": 55, "cal": 55, "tl": 82, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "System.Runtime.CompilerServices", "rp": "pBiblioteca_CompilerServices.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 23, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "UpdateUserRequest", "rp": "pBiblioteca_UpdateUserRequest.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "UserResponseDTO", "rp": "pBiblioteca_UserResponseDTO.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "UserService", "rp": "pBiblioteca_UserService.html", "cl": 0, "ucl": 24, "cal": 24, "tl": 54, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "UpdateUserRequest", "rp": "pBiblioteca_UpdateUserRequest.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "UpdateUserRequestDTO", "rp": "pBiblioteca_UpdateUserRequestDTO.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "UserResponseDTO", "rp": "pBiblioteca_UserResponseDTO.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "UserService", "rp": "pBiblioteca_UserService.2.html", "cl": 0, "ucl": 24, "cal": 24, "tl": 109, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -305,12 +313,6 @@ var riskHotspots = [
       { "value": 12, "exceeded": false },
     ]},
   {
-    "assembly": "pBiblioteca", "class": "LoanService", "reportPath": "pBiblioteca_LoanService.html", "methodName": "CreateLoan(pBiblioteca.Models.CreateLoanRequest)", "methodShortName": "CreateLoan(...)", "fileIndex": 0, "line": 83,
-    "metrics": [
-      { "value": 133, "exceeded": true },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
     "assembly": "pBiblioteca", "class": "Microsoft.AspNetCore.OpenApi.Generated", "reportPath": "pBiblioteca_Generated.html", "methodName": "CreateDocumentationId(System.Reflection.PropertyInfo)", "methodShortName": "CreateDocumentationId(...)", "fileIndex": 0, "line": 100,
     "metrics": [
       { "value": 110, "exceeded": true },
@@ -318,12 +320,6 @@ var riskHotspots = [
     ]},
   {
     "assembly": "pBiblioteca", "class": "pBiblioteca.Services.ReservationService", "reportPath": "pBiblioteca_ReservationService.html", "methodName": "CreateReservation(pBiblioteca.Models.CreateReservationRequest)", "methodShortName": "CreateReservation(...)", "fileIndex": 0, "line": 22,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "pBiblioteca", "class": "pBiblioteca.Services.ReservationService", "reportPath": "pBiblioteca_ReservationService.html", "methodName": "GetQueue(System.String)", "methodShortName": "GetQueue(...)", "fileIndex": 0, "line": 81,
     "metrics": [
       { "value": 72, "exceeded": true },
       { "value": 8, "exceeded": false },
@@ -345,6 +341,12 @@ var riskHotspots = [
     "metrics": [
       { "value": 42, "exceeded": true },
       { "value": 6, "exceeded": false },
+    ]},
+  {
+    "assembly": "pBiblioteca", "class": "LoanService", "reportPath": "pBiblioteca_LoanService.html", "methodName": "CreateLoan(pBiblioteca.Models.CreateLoanRequest)", "methodShortName": "CreateLoan(...)", "fileIndex": 0, "line": 83,
+    "metrics": [
+      { "value": 18, "exceeded": false },
+      { "value": 16, "exceeded": true },
     ]},
 ];
 
