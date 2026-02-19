@@ -21,7 +21,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
         }
 
         // =====================================================
-        // GET /Loan  (GetAllLoans)
+        // GET /Loan  (GetAllLoans com filtros)
         // =====================================================
 
         [Test]
@@ -33,9 +33,14 @@ namespace Projeto_Biblioteca.Tests.Controllers
                 new LoanResponseDTO { Id = 2, UserCpf = "456", BookIsbn = "isbn2" }
             };
 
-            _mockService.Setup(s => s.GetLoans()).Returns(loans);
+            _mockService
+                .Setup(s => s.GetLoans(
+                    It.IsAny<bool?>(),
+                    It.IsAny<string?>(),
+                    It.IsAny<string?>()))
+                .Returns(loans);
 
-            var result = _controller.Get();
+            var result = _controller.Get(null, null, null);
 
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
 
@@ -46,7 +51,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
             Assert.That(value.Count, Is.EqualTo(2));
             Assert.That(value[0].Id, Is.EqualTo(1));
 
-            _mockService.Verify(s => s.GetLoans(), Times.Once);
+            _mockService.Verify(s => s.GetLoans(null, null, null), Times.Once);
         }
 
         // =====================================================
@@ -76,7 +81,6 @@ namespace Projeto_Biblioteca.Tests.Controllers
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
             var ok = (OkObjectResult)result;
 
-            Assert.That(ok.Value, Is.InstanceOf<LoanResponseDTO>());
             var value = (LoanResponseDTO)ok.Value!;
             Assert.That(value.Id, Is.EqualTo(1));
 
@@ -91,6 +95,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
         public void GetByUser_DeveRetornarNotFound_QuandoListaVazia()
         {
             string cpf = "123";
+
             _mockService.Setup(s => s.GetLoansByUser(cpf))
                         .Returns(new List<LoanResponseDTO>());
 
@@ -104,6 +109,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
         public void GetByUser_DeveRetornarOk_QuandoTiverLoans()
         {
             string cpf = "123";
+
             _mockService.Setup(s => s.GetLoansByUser(cpf))
                         .Returns(new List<LoanResponseDTO>
                         {
@@ -115,7 +121,6 @@ namespace Projeto_Biblioteca.Tests.Controllers
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
             var ok = (OkObjectResult)result;
 
-            Assert.That(ok.Value, Is.InstanceOf<List<LoanResponseDTO>>());
             var list = (List<LoanResponseDTO>)ok.Value!;
             Assert.That(list.Count, Is.EqualTo(1));
             Assert.That(list[0].UserCpf, Is.EqualTo(cpf));
@@ -147,7 +152,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
             var request = new CreateLoanRequest { UserCpf = "123", BookIsbn = "isbn" };
 
             _mockService.Setup(s => s.CreateLoan(It.IsAny<CreateLoanRequest>()))
-                        .Returns(""); // sucesso
+                        .Returns("");
 
             var result = _controller.Post(request);
 
