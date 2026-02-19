@@ -19,6 +19,5 @@ public class CreateLoanRequest
     public string UserCpf { get; set; } = null!;
 
     public string BookIsbn { get; set; } = null!;
-    public DateTime DueDate { get; set; }
 }
 

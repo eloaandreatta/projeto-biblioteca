@@ -19,7 +19,7 @@ public partial class TbFine
 
     public decimal Dailyrate { get; set; }
 
-    public DateOnly Paymentdate { get; set; }
+    public DateOnly? Paymentdate { get; set; }
 
     public virtual TbLoan Loan { get; set; } = null!;
 
