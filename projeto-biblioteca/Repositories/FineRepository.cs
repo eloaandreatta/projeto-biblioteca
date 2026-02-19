@@ -2,7 +2,7 @@ using pBiblioteca.Models;
 
 public class FineRepository : IFineRepository
 {
-    private PostgresContext _context;
+    private readonly PostgresContext _context;
 
     public FineRepository(PostgresContext context)
     {
@@ -36,9 +36,8 @@ public class FineRepository : IFineRepository
             Dayslate = daysLate,
             Dailyrate = dailyRate,
             Ispaid = false,
-
-            // Como Paymentdate não é nulo no seu model:
-            Paymentdate = DateOnly.FromDateTime(DateTime.MinValue)
+            // se não pagou, deixa null 
+            Paymentdate = null
         };
 
         _context.TbFines.Add(fine);
@@ -67,7 +66,7 @@ public class FineRepository : IFineRepository
         if (fine.Ispaid) return false;
 
         fine.Ispaid = true;
-        fine.Paymentdate = paymentDate;
+        fine.Paymentdate = paymentDate; 
 
         _context.SaveChanges();
         return true;

@@ -26,6 +26,8 @@ builder.Services.AddScoped<ILoanService, LoanService>();
 builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 builder.Services.AddScoped<IFineRepository, FineRepository>();
 builder.Services.AddScoped<IFineService, FineService>();
+builder.Services.AddHostedService<ReservationExpirationHostedService>();
+
 
 var app = builder.Build();
 

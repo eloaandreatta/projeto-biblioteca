@@ -85,4 +85,28 @@ public class LoanController : ControllerBase
         return Ok();
     }
 
+    // GET /Loan/user/{cpf}/active
+    [HttpGet("user/{cpf}/active")]
+    public IActionResult GetActiveLoansByUser(string cpf)
+    {
+        var loans = _service.GetActiveLoansByUser(cpf);
+
+        if (loans == null || !loans.Any())
+            return NotFound();
+
+        return Ok(loans);
+    }
+
+    // GET /Loan/user/{cpf}/history
+    [HttpGet("user/{cpf}/history")]
+    public IActionResult GetLoanHistoryByUser(string cpf)
+    {
+        var loans = _service.GetLoanHistoryByUser(cpf);
+
+        if (loans == null || !loans.Any())
+            return NotFound();
+
+        return Ok(loans);
+    }
+    
 }

@@ -27,10 +27,6 @@ public partial class PostgresContext : DbContext
 
     public virtual DbSet<TbUser> TbUsers { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=123");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -141,16 +137,17 @@ public partial class PostgresContext : DbContext
 
         modelBuilder.Entity<TbReservationBook>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("tb_reservation_book", "biblioteca");
+            entity.ToTable("tb_reservation_book", "biblioteca");
+
+            entity.HasKey(e => e.ReservationId); // define PK
+
+            entity.Property(e => e.ReservationId)
+                .HasColumnName("reservation_id")
+                .ValueGeneratedOnAdd(); // serial do PostgreSQL
 
             entity.Property(e => e.BookIsbn)
                 .HasMaxLength(13)
                 .HasColumnName("book_isbn");
-            entity.Property(e => e.ReservationId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("reservation_id");
 
             entity.HasOne(d => d.BookIsbnNavigation).WithMany()
                 .HasForeignKey(d => d.BookIsbn)
@@ -162,6 +159,7 @@ public partial class PostgresContext : DbContext
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("fk_reservationb_reservation");
         });
+
 
         modelBuilder.Entity<TbUser>(entity =>
         {
