@@ -2,22 +2,24 @@ namespace pBiblioteca.Models;
 
 public class ReservationResponseDTO
 {
-    public long Id { get; set; }
-    public string Cpf { get; set; } = string.Empty;
-    public string Isbn { get; set; } = string.Empty;
+    public int ReservationId { get; set; }
+    public string UserCpf { get; set; } = string.Empty;
+    public string BookIsbn { get; set; } = string.Empty;
 
-    public DateTime ReservationDate { get; set; }
-    public string Status { get; set; } = string.Empty;
+    public DateOnly ReservationDate { get; set; }
+    public bool Status { get; set; }
+    public string StatusText { get; set; } = string.Empty;
+    public DateOnly NotifiedDate { get; set; }
+    public DateOnly ExpirationDate { get; set; }
 
-    public DateTime? PickupDeadline { get; set; }
-
-    // pra mostrar fila
+    // posição na fila
     public int Position { get; set; }
 }
 
 public class CreateReservationRequest
 {
-    public string Cpf { get; set; } = default!;
-    public string Isbn { get; set; } = default!;
+    public string UserCpf { get; set; } = default!;
+    public string BookIsbn { get; set; } = default!;
+  
 }
 

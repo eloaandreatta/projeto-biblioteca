@@ -2,12 +2,32 @@ using pBiblioteca.Models;
 
 public class UserResponseDTO
 {
-    public string Cpf {get;set;} = null!;
-    public string Email {get;set;} = null!;
-    public string Nome {get;set;} = null!;
+    public string Cpf {get;set;} = string.Empty;
+    public string Name {get;set;} = string.Empty;
+    public string Telephone {get;set;} = string.Empty;
+    public string Email {get;set;} = string.Empty;
+    public string Address {get;set;} = string.Empty;
 }
 
 public class UpdateUserRequest
 {
-    public string Senha {get;set;} = null!;
+    public string Password {get;set;} = string.Empty;
+}
+
+public class UpdateUserRequestDTO
+{
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Telephone { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+}
+
+public class CreateUserRequestDTO
+{
+    public string Cpf { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
+    public string Telephone { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;  
 }

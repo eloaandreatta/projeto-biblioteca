@@ -20,10 +20,10 @@ public class ReservationService : IReservationService
 
     public string CreateReservation(CreateReservationRequest request)
     {
-        var user = _userRepo.GetUserById(request.Cpf);
+        var user = _userRepo.GetUserById(request.UserCpf);
         if (user == null) return "user_not_found";
 
-        var book = _bookRepo.GetBookByIsbn(request.Isbn);
+        var book = _bookRepo.GetBookByIsbn(request.BookIsbn);
         if (book == null) return "book_not_found";
 
         // Regra: reserva só quando indisponível
@@ -31,7 +31,7 @@ public class ReservationService : IReservationService
             return "book_available_no_need_reservation";
 
         // Regra: não duplicar reserva ativa
-        var existingActive = _reservationRepo.GetActiveReservationForUserAndBook(user.Cpf, request.Isbn);
+        var existingActive = _reservationRepo.GetActiveReservationForUserAndBook(user.Cpf, request.BookIsbn);
         if (existingActive != null)
             return "reservation_already_exists";
 
@@ -49,11 +49,11 @@ public class ReservationService : IReservationService
             Status = true
         };
 
-        _reservationRepo.CreateReservationWithBook(reservation, request.Isbn);
+        _reservationRepo.CreateReservationWithBook(reservation, request.BookIsbn);
         return "ok";
     }
 
-    public string CancelReservation(long reservationId)
+    public string CancelReservation(int reservationId)
     {
         var reservation = _reservationRepo.GetById(reservationId);
         if (reservation == null) return "not_found";
@@ -81,25 +81,25 @@ public class ReservationService : IReservationService
     {
         var queue = _reservationRepo.GetActiveQueueByBook(isbn);
 
-        var result = new List<ReservationResponseDTO>();
+        var result = new List<ReservationResponseDTO>(queue.Count);
+
         for (int i = 0; i < queue.Count; i++)
         {
             var r = queue[i];
 
-            DateTime reservationDate = r.Reservationdate.ToDateTime(TimeOnly.MinValue);
-
-            DateTime? pickupDeadline = null;
-            if (r.Notifieddate != DateOnly.MinValue && r.Expirationdate != DateOnly.MinValue)
-                pickupDeadline = r.Expirationdate.ToDateTime(TimeOnly.MinValue);
-
             result.Add(new ReservationResponseDTO
             {
-                Id = r.Id,
-                Isbn = isbn,
-                Cpf = r.UserCpf,
-                Status = r.Status ? "ACTIVE" : "CANCELLED",
-                ReservationDate = reservationDate,
-                PickupDeadline = pickupDeadline,
+                ReservationId = r.Id,
+                BookIsbn = isbn,
+                UserCpf = r.UserCpf,
+
+                Status = r.Status,
+                StatusText = r.Status ? "ACTIVE" : "CANCELLED",
+
+                ReservationDate = r.Reservationdate,
+                NotifiedDate = r.Notifieddate,
+                ExpirationDate = r.Expirationdate,
+
                 Position = i + 1
             });
         }

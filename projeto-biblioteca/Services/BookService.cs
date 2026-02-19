@@ -19,13 +19,13 @@ public class BookService : IBookService
         {
             BookResponseDTO bookRetorno = new BookResponseDTO();
             bookRetorno.Isbn = tbBook.Isbn;
-            bookRetorno.Titulo = tbBook.Title;
-            bookRetorno.Autor = tbBook.Author;
-            bookRetorno.AnoPublicacao = tbBook.Publicationyear;
-            bookRetorno.Categoria = tbBook.Category;
-            bookRetorno.Editora = tbBook.Publisher;
-            bookRetorno.QuantidadeTotal = tbBook.Totalquantity;
-            bookRetorno.QuantidadeDisponivel = tbBook.Availablequantity;
+            bookRetorno.Title = tbBook.Title;
+            bookRetorno.Author = tbBook.Author;
+            bookRetorno.PublicationYear = tbBook.Publicationyear;
+            bookRetorno.Category = tbBook.Category;
+            bookRetorno.Publisher = tbBook.Publisher;
+            bookRetorno.TotalQuantity = tbBook.Totalquantity;
+            bookRetorno.AvailableQuantity = tbBook.Availablequantity;
 
             booksDTO.Add(bookRetorno);
         }
@@ -46,13 +46,13 @@ public class BookService : IBookService
         return new BookResponseDTO
         {
             Isbn = tbBook.Isbn,
-            Titulo = tbBook.Title,
-            Autor = tbBook.Author,
-            AnoPublicacao = tbBook.Publicationyear,
-            Categoria = tbBook.Category,
-            Editora = tbBook.Publisher,
-            QuantidadeTotal = tbBook.Totalquantity,
-            QuantidadeDisponivel = tbBook.Availablequantity
+            Title = tbBook.Title,
+            Author = tbBook.Author,
+            PublicationYear = tbBook.Publicationyear,
+            Category = tbBook.Category,
+            Publisher = tbBook.Publisher,
+            TotalQuantity = tbBook.Totalquantity,
+            AvailableQuantity = tbBook.Availablequantity
         };
     }
 
@@ -62,15 +62,15 @@ public class BookService : IBookService
         if (request == null) return "error";
 
         if (string.IsNullOrWhiteSpace(request.Isbn)) return "error";
-        if (string.IsNullOrWhiteSpace(request.Titulo)) return "error";
-        if (string.IsNullOrWhiteSpace(request.Autor)) return "error";
-        if (string.IsNullOrWhiteSpace(request.Categoria)) return "error";
-        if (string.IsNullOrWhiteSpace(request.Editora)) return "error";
+        if (string.IsNullOrWhiteSpace(request.Title)) return "error";
+        if (string.IsNullOrWhiteSpace(request.Author)) return "error";
+        if (string.IsNullOrWhiteSpace(request.Category)) return "error";
+        if (string.IsNullOrWhiteSpace(request.Publisher)) return "error";
 
-        if (request.AnoPublicacao <= 0) return "error";
-        if (request.QuantidadeTotal < 0) return "error";
-        if (request.QuantidadeDisponivel < 0) return "error";
-        if (request.QuantidadeDisponivel > request.QuantidadeTotal) return "error";
+        if (request.PublicationYear <= 0) return "error";
+        if (request.TotalQuantity < 0) return "error";
+        if (request.AvailableQuantity < 0) return "error";
+        if (request.AvailableQuantity > request.AvailableQuantity) return "error";
 
         string isbn = request.Isbn.Trim();
 
@@ -80,13 +80,13 @@ public class BookService : IBookService
 
         _repository.InsertBook(
             isbn,
-            request.Titulo.Trim(),
-            request.Autor.Trim(),
-            request.AnoPublicacao,
-            request.Categoria.Trim(),
-            request.Editora.Trim(),
-            request.QuantidadeTotal,
-            request.QuantidadeDisponivel
+            request.Title.Trim(),
+            request.Author.Trim(),
+            request.PublicationYear,
+            request.Category.Trim(),
+            request.Publisher.Trim(),
+            request.TotalQuantity,
+            request.AvailableQuantity
         );
 
         return "";

@@ -1,10 +1,18 @@
+using pBiblioteca.DTO;
 using pBiblioteca.Models;
 
-public interface IUserRepository
+    public interface IUserRepository
 {
-    public List<TbUser> SelectUsers();
+    List<TbUser> SelectUsers();
 
-    public List<TbUser> SelectUsersWithOrders();
-    public void UpdateUser(string Cpf, string newPassword);
-    public TbUser? GetUserById(string Cpf);
+    TbUser? GetUserById(string cpf);
+
+    TbUser? GetUserByTelephone(string telephone);
+
+    void AddUser(TbUser user);
+
+    void UpdateUserData(string cpf, UpdateUserRequestDTO request);
+
+    void DeleteUser(string cpf);
+
 }
