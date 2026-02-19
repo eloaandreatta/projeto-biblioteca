@@ -4,26 +4,26 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
+          <Format>cobertura</Format>
 
-          <!-- Excluir arquivos/pastas que não fazem sentido testar unitariamente -->
-          <ExcludeByFile>
-            **/Program.cs
-            **/*Context.cs
-            **/Models/PostgresContext.cs
-            **/obj/**
-            **/bin/**
-            **/*generated.cs
-            **/Migrations/**
-            **/WeatherForecast.cs
-          </ExcludeByFile>
+          <!-- Excluir por padrão de nome (assembly/type filter) -->
+          <Exclude>[pBiblioteca]pBiblioteca.Models.*,[pBiblioteca]pBiblioteca.DTO.*</Exclude>
+          <ModulePath>.*Microsoft.AspNetCore.OpenApi.*</ModulePath>
 
-          <Exclude>
-            [pBiblioteca]*.Repositories.*
-            [pBiblioteca]*.Models.*
-          </Exclude>
+          <!-- Excluir por arquivo -->
+          <ExcludeByFile>**/Models/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/DTO/**/*.cs</ExcludeByFile>
+           <ExcludeByFile>**/Repositories/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+
+         
+          <!-- Excluir por módulos/assemblies (opcional; pode até tirar) -->
+          <ExcludeByFile>**/obj/**</ExcludeByFile>
+          <ExcludeByFile>**/bin/**</ExcludeByFile>
 
         </Configuration>
       </DataCollector>
     </DataCollectors>
   </DataCollectionRunSettings>
 </RunSettings>
+qxk-wget-daq

@@ -16,11 +16,14 @@ public class LoanController : ControllerBase
         _service = service;
     }
 
-    //GET LOAN
-    [HttpGet(Name = "GetAllLoans")]
-    public IActionResult Get()
+    [HttpGet]
+    public IActionResult Get(
+        [FromQuery] bool? status,
+        [FromQuery] string? userCpf,
+        [FromQuery] string? bookIsbn)
     {
-        return Ok(_service.GetLoans());
+        var loans = _service.GetLoans(status, userCpf, bookIsbn);
+        return Ok(loans);
     }
 
 

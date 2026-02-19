@@ -231,4 +231,30 @@ public class LoanService : ILoanService
         _repository.Save();
         return "ok";
     }
+
+    public List<LoanResponseDTO> GetLoans(bool? status, string? userCpf, string? bookIsbn)
+    {
+        var tbLoans = _repository.SelectLoans();
+
+        if (status.HasValue)
+            tbLoans = tbLoans.Where(l => l.Status == status.Value).ToList();
+
+        if (!string.IsNullOrEmpty(userCpf))
+            tbLoans = tbLoans.Where(l => l.UserCpf == userCpf).ToList();
+
+        if (!string.IsNullOrEmpty(bookIsbn))
+            tbLoans = tbLoans.Where(l => l.BookIsbn == bookIsbn).ToList();
+
+        return tbLoans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        }).ToList();
+    }
+
 }

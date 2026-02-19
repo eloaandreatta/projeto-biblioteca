@@ -2,7 +2,11 @@ using pBiblioteca.Models;
 
 public interface ILoanService
 {
-    public List<LoanResponseDTO> GetLoans();
+    List<LoanResponseDTO> GetLoans(
+        bool? status,
+        string? userCpf,
+        string? bookIsbn
+    );
     public LoanResponseDTO? GetLoanById(int id);
     public List<LoanResponseDTO> GetLoansByUser(string cpf);
     public string CreateLoan(CreateLoanRequest request);
