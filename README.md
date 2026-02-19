@@ -1,6 +1,3 @@
-#!/bin/bash
-
-cat << 'EOF' > README.md
 # 📚 Biblioteca API
 
 API desenvolvida em **ASP.NET Core (.NET)** com **PostgreSQL**, responsável pelo gerenciamento de usuários, livros, empréstimos, reservas e multas.
