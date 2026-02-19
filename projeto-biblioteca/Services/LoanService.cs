@@ -60,6 +60,24 @@ public class LoanService : ILoanService
         };
     }
 
+    // GET BY CPF
+    public List<LoanResponseDTO> GetLoansByUser(string cpf)
+    {
+        var loans = _repository.GetLoansByUserCpf(cpf);
+
+        return loans.Select(l => new LoanResponseDTO
+        {
+            Id = l.Id,
+            UserCpf = l.UserCpf,
+            BookIsbn = l.BookIsbn,
+            LoanDate = l.Loandate,
+            DueDate = l.Duedate,
+            ReturnDate = l.Returndate,
+            Status = l.Status
+        }).ToList();
+    }
+
+
     // CREATE LOAN
     public string CreateLoan(CreateLoanRequest request)
     {
@@ -163,5 +181,43 @@ public class LoanService : ILoanService
 
         return "";
     }
+
+    public string RenewLoan(int id)
+    {
+        var loan = _repository.GetLoanById(id);
+
+        if (loan == null)
+            return "error";
+
+        if (!loan.Status)
+            return "error";
+
+        if (_repository.UserHasUnpaidFine(loan.UserCpf))
+            return "error";
+
+        DateOnly today = DateOnly.FromDateTime(DateTime.Now);
+
+        // Regra de negócio: Não pode estar atrasado
+        if (loan.Duedate < today)
+            return "error";
+
+        // Regra de negócio: Só pode renovar uma vez (máximo 28 dias totais)
+        DateOnly maxDueDate = loan.Loandate.AddDays(28);
+
+        if (loan.Duedate >= maxDueDate)
+            return "error";
+
+        DateOnly newDueDate = loan.Duedate.AddDays(14);
+
+        bool updated = _repository.RenewLoan(id, newDueDate);
+
+        if (!updated)
+            return "error";
+
+        _repository.Save();
+
+        return "ok";
+    }
+
 
 }

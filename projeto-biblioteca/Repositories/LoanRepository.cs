@@ -29,6 +29,18 @@ public class LoanRepository : ILoanRepository
     }
 
     // =========================
+    // BUSCAR POR CPF DO USUÁRIO
+    // =========================
+    public List<TbLoan> GetLoansByUserCpf(string cpf)
+    {
+        return _context.TbLoans
+            .Where(l => l.UserCpf == cpf)
+            .OrderByDescending(l => l.Id)
+            .ToList();
+    }
+
+
+    // =========================
     // CRIAR EMPRÉSTIMO
     // =========================
     public bool InsertLoan(string userCpf, string bookIsbn, DateOnly loanDate, DateOnly dueDate)
@@ -62,6 +74,19 @@ public class LoanRepository : ILoanRepository
 
         return true;
     }
+
+    public bool RenewLoan(int id, DateOnly newDueDate)
+    {
+        TbLoan? loan = _context.TbLoans.FirstOrDefault(l => l.Id == id);
+
+        if (loan == null)
+            return false;
+
+        loan.Duedate = newDueDate;
+
+        return true;
+    }
+
 
     public TbUser? GetUserByCpf(string cpf)
     {

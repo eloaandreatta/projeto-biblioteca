@@ -23,8 +23,7 @@ public class LoanServiceTests
         var request = new CreateLoanRequest
         {
             UserCpf = "12345678900",
-            BookIsbn = "9781234567890",
-            DueDate = DateTime.Now.AddDays(7)
+            BookIsbn = "9781234567890"
         };
 
         // Configuramos o mock:

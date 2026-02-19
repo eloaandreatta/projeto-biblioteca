@@ -36,6 +36,18 @@ public class LoanController : ControllerBase
         return Ok(loan);
     }
 
+    // GET /Loan/user/{cpf}
+    [HttpGet("user/{cpf}")]
+    public IActionResult GetByUser(string cpf)
+    {
+        var loans = _service.GetLoansByUser(cpf);
+
+        if (loans == null || !loans.Any())
+            return NotFound();
+
+        return Ok(loans);
+    }
+
     // POST /Loan
     [HttpPost]
     public IActionResult Post([FromBody] CreateLoanRequest request)
@@ -56,6 +68,18 @@ public class LoanController : ControllerBase
         string error = _service.ReturnLoan(id);
 
         if (error == "error")
+            return BadRequest();
+
+        return Ok();
+    }
+
+    // PUT /Loan/renew/{id}
+    [HttpPut("renew/{id}")]
+    public IActionResult RenewLoan(int id)
+    {
+        string result = _service.RenewLoan(id);
+
+        if (result == "error")
             return BadRequest();
 
         return Ok();
