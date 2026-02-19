@@ -15,7 +15,7 @@ public partial class TbLoan
 
     public DateOnly Duedate { get; set; }
 
-    public DateOnly Returndate { get; set; }
+    public DateOnly? Returndate { get; set; }
 
     public bool Status { get; set; }
 
