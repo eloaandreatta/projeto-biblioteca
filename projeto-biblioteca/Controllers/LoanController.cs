@@ -139,17 +139,42 @@ public class LoanController : ControllerBase
     }
 
     [HttpGet("details")]
-public IActionResult GetDetails(
-    [FromQuery] bool? status,
-    [FromQuery] string? userCpf,
-    [FromQuery] string? bookIsbn)
-{
-    var result = _service.GetLoanDetails(status, userCpf, bookIsbn);
+    public IActionResult GetDetails(
+        [FromQuery] bool? status,
+        [FromQuery] string? userCpf,
+        [FromQuery] string? bookIsbn)
+    {
+        var result = _service.GetLoanDetails(status, userCpf, bookIsbn);
 
-    if (result == null || !result.Any())
-        return NotFound();
+        if (result == null || !result.Any())
+            return NotFound();
 
-    return Ok(result);
-}
+        return Ok(result);
+    }
+
+    // GET /Loan/user/{cpf}/active
+    [HttpGet("user/{cpf}/active")]
+    public IActionResult GetActiveLoansByUser(string cpf)
+    {
+        var loans = _service.GetActiveLoansByUser(cpf);
+
+        if (loans == null || !loans.Any())
+            return NotFound();
+
+        return Ok(loans);
+    }
+
+    // GET /Loan/user/{cpf}/history
+    [HttpGet("user/{cpf}/history")]
+    public IActionResult GetLoanHistoryByUser(string cpf)
+    {
+        var loans = _service.GetLoanHistoryByUser(cpf);
+
+        if (loans == null || !loans.Any())
+            return NotFound();
+
+        return Ok(loans);
+    }
+    
 
 }

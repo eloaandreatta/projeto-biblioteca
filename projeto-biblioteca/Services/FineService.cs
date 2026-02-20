@@ -1,10 +1,6 @@
 using pBiblioteca.DTO;
 using pBiblioteca.Models;
 namespace pBiblioteca.Services;
-<<<<<<< HEAD
-
-=======
->>>>>>> 79e4bf33068926dc124bbbf5480521bd24b04751
 public class FineService : IFineService
 {
     private readonly IFineRepository _fineRepository;

@@ -10,17 +10,12 @@ public class LoanService : ILoanService
 
     private const decimal DAILY_FINE_RATE = 0.30m;
     private const int LOAN_PERIOD_DAYS = 14;
-<<<<<<< HEAD
     private const int RESERVATION_PICKUP_DAYS = 3; 
 
     public LoanService(
         ILoanRepository repository,
         IFineRepository fineRepo,
         IReservationService reservationService) 
-=======
-
-    public LoanService(ILoanRepository repository)
->>>>>>> 79e4bf33068926dc124bbbf5480521bd24b04751
     {
         _repository = repository;
         _fineRepo = fineRepo;
@@ -272,3 +267,38 @@ public class LoanService : ILoanService
         return _repository.SelectLoanDetails(status, userCpf, bookIsbn);
     }
 
+    public IEnumerable<LoanResponseDTO> GetActiveLoansByUser(string cpf)
+    {
+        var loans = _repository.GetLoansByUserCpf(cpf)
+                            .Where(l => l.Status == true);
+
+        return loans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        });
+    }
+
+    public IEnumerable<LoanResponseDTO> GetLoanHistoryByUser(string cpf)
+    {
+        var loans = _repository.GetLoansByUserCpf(cpf)
+                            .Where(l => l.Status == false);
+
+        return loans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        });
+    }
+    
+}
