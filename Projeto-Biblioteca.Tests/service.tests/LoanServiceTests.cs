@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Projeto_Biblioteca.Tests
+namespace pBiblioteca.Services
 {
     [TestFixture]
     public class LoanServiceTests
