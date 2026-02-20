@@ -3,7 +3,7 @@ using NUnit.Framework;
 using pBiblioteca.Models;
 using System.Collections.Generic;
 
-namespace projeto_biblioteca.Tests
+namespace pBiblioteca.Services
 {
     [TestFixture]
     public class BookServiceTests

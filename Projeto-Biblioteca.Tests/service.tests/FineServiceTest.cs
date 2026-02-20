@@ -4,7 +4,7 @@ using pBiblioteca.Models;
 using System;
 using System.Collections.Generic;
 
-namespace Projeto_Biblioteca.Tests
+namespace pBiblioteca.Services
 {
     [TestFixture]
     public class FineServiceTests

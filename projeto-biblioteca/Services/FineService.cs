@@ -1,5 +1,6 @@
 using pBiblioteca.DTO;
 using pBiblioteca.Models;
+namespace pBiblioteca.Services;
 
 public class FineService : IFineService
 {

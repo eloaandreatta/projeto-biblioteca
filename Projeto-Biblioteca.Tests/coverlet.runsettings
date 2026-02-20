@@ -5,22 +5,25 @@
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
 
-          <!-- Excluir arquivos/pastas que não fazem sentido testar unitariamente -->
-          <ExcludeByFile>
-            **/Program.cs
-            **/*Context.cs
-            **/Models/PostgresContext.cs
-            **/obj/**
-            **/bin/**
-            **/*generated.cs
-            **/Migrations/**
-            **/WeatherForecast.cs
-          </ExcludeByFile>
+          <!-- ✅ Só conta cobertura do assembly principal -->
+          <Include>[pBiblioteca]*</Include>
 
+          <!-- ✅ E dentro dele, só Services e Controllers -->
+          <Include>[pBiblioteca]pBiblioteca.Services.*,[pBiblioteca]pBiblioteca.Controllers.*</Include>
+
+          <!-- 🚫 Exclui o resto -->
           <Exclude>
-            [pBiblioteca]*.Repositories.*
-            [pBiblioteca]*.Models.*
+            [pBiblioteca]pBiblioteca.Repositories.*,
+            [pBiblioteca]pBiblioteca.Models.*,
+            [pBiblioteca]pBiblioteca.DTO.*,
+            [pBiblioteca]Microsoft.AspNetCore.OpenApi.Generated*,
+            [pBiblioteca]Program,
+            [pBiblioteca]pBiblioteca.WeatherForecast,
+            [pBiblioteca]pBiblioteca.ReservationExpirationHostedService
           </Exclude>
+
+          <Format>cobertura</Format>
+          <SingleHit>false</SingleHit>
 
         </Configuration>
       </DataCollector>

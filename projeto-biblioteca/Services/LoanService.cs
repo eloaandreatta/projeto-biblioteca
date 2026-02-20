@@ -5,16 +5,16 @@ public class LoanService : ILoanService
 {
     private readonly ILoanRepository _repository;
     private readonly IFineRepository _fineRepo;
-    private readonly IReservationService _reservationService; // ✅ NOVO
+    private readonly IReservationService _reservationService; 
 
     private const decimal DAILY_FINE_RATE = 0.50m;
     private const int LOAN_PERIOD_DAYS = 14;
-    private const int RESERVATION_PICKUP_DAYS = 3; // ✅ NOVO (pra notificar)
+    private const int RESERVATION_PICKUP_DAYS = 3; 
 
     public LoanService(
         ILoanRepository repository,
         IFineRepository fineRepo,
-        IReservationService reservationService) // ✅ NOVO
+        IReservationService reservationService) 
     {
         _repository = repository;
         _fineRepo = fineRepo;
