@@ -8,7 +8,7 @@ public class LoanService : ILoanService
     private readonly IFineRepository _fineRepo;
     private readonly IReservationService _reservationService; // ✅ NOVO
 
-    private const decimal DAILY_FINE_RATE = 0.50m;
+    private const decimal DAILY_FINE_RATE = 0.30m;
     private const int LOAN_PERIOD_DAYS = 14;
     private const int RESERVATION_PICKUP_DAYS = 3; // ✅ NOVO (pra notificar)
 
