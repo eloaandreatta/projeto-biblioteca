@@ -10,14 +10,17 @@
           <Exclude>[pBiblioteca]pBiblioteca.Models.*,[pBiblioteca]pBiblioteca.DTO.*</Exclude>
           <ModulePath>.*Microsoft.AspNetCore.OpenApi.*</ModulePath>
 
-            <ExcludeByFile>
-            **/Models/**/*.cs,
-            **/DTO/**/*.cs,
-            **/Repositories/**/*.cs,
-            **/Program.cs,
-            **/obj/**,
-            **/bin/**
-            </ExcludeByFile>
+          <!-- Excluir por arquivo -->
+          <ExcludeByFile>**/Models/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/DTO/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Repositories/**/*.cs</ExcludeByFile>
+           <ExcludeByFile>**/Repository/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+
+         
+          <!-- Excluir por módulos/assemblies (opcional; pode até tirar) -->
+          <ExcludeByFile>**/obj/**</ExcludeByFile>
+          <ExcludeByFile>**/bin/**</ExcludeByFile>
 
         </Configuration>
       </DataCollector>

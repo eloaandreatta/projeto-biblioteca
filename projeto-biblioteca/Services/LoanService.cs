@@ -10,12 +10,8 @@ public class LoanService : ILoanService
 
     private const decimal DAILY_FINE_RATE = 0.30m;
     private const int LOAN_PERIOD_DAYS = 14;
-    private const int RESERVATION_PICKUP_DAYS = 3; // ✅ NOVO (pra notificar)
 
-    public LoanService(
-        ILoanRepository repository,
-        IFineRepository fineRepo,
-        IReservationService reservationService) // ✅ NOVO
+    public LoanService(ILoanRepository repository)
     {
         _repository = repository;
         _fineRepo = fineRepo;
@@ -136,7 +132,11 @@ public class LoanService : ILoanService
             dueDate
         );
 
-        if (!success) return "error";
+        if (!success)
+            return "error";
+
+        // Atualiza estoque (reduz disponibilidade)
+        book.Availablequantity--;
 
         book.Availablequantity--;
         _repository.Save();
@@ -257,5 +257,9 @@ public class LoanService : ILoanService
             Status = tbLoan.Status
         }).ToList();
     }
+    
+    public List<LoanDetailsDTO> GetLoanDetails(bool? status, string? userCpf, string? bookIsbn)
+    {
+        return _repository.SelectLoanDetails(status, userCpf, bookIsbn);
+    }
 
-}
