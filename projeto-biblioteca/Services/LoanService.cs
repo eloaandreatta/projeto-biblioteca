@@ -2,17 +2,17 @@ using pBiblioteca.Models;
 
 public class LoanService : ILoanService
 {
-    private ILoanRepository _repository;
+    private readonly ILoanRepository _repository;
     // REGRA DE NEGÓCIO:
     // Valor fixo da multa por dia de atraso.
     private const decimal DAILY_FINE_RATE = 0.50m;
     private const int LOAN_PERIOD_DAYS = 14;
+
     public LoanService(ILoanRepository repository)
     {
         _repository = repository;
     }
 
-    // GET ALL
     public List<LoanResponseDTO> GetLoans()
     {
         List<TbLoan> tbLoans = _repository.SelectLoans();
@@ -20,7 +20,7 @@ public class LoanService : ILoanService
 
         foreach (TbLoan tbLoan in tbLoans)
         {
-            LoanResponseDTO loanDTO = new LoanResponseDTO
+            loansDTO.Add(new LoanResponseDTO
             {
                 Id = tbLoan.Id,
                 UserCpf = tbLoan.UserCpf,
@@ -29,9 +29,7 @@ public class LoanService : ILoanService
                 DueDate = tbLoan.Duedate,
                 ReturnDate = tbLoan.Returndate,
                 Status = tbLoan.Status
-            };
-
-            loansDTO.Add(loanDTO);
+            });
         }
 
         return loansDTO;
@@ -120,7 +118,7 @@ public class LoanService : ILoanService
 
         if (!success)
             return "error";
-        
+
         // Atualiza estoque (reduz disponibilidade)
         book.Availablequantity--;
 
@@ -219,5 +217,33 @@ public class LoanService : ILoanService
         return "ok";
     }
 
+    public List<LoanResponseDTO> GetLoans(bool? status, string? userCpf, string? bookIsbn)
+    {
+        var tbLoans = _repository.SelectLoans();
 
+        if (status != null)
+            tbLoans = tbLoans.Where(l => l.Status == status.Value).ToList();
+
+        if (!string.IsNullOrWhiteSpace(userCpf))
+            tbLoans = tbLoans.Where(l => l.UserCpf == userCpf).ToList();
+
+        if (!string.IsNullOrWhiteSpace(bookIsbn))
+            tbLoans = tbLoans.Where(l => l.BookIsbn == bookIsbn).ToList();
+
+        return tbLoans.Select(l => new LoanResponseDTO
+        {
+            Id = l.Id,
+            UserCpf = l.UserCpf,
+            BookIsbn = l.BookIsbn,
+            LoanDate = l.Loandate,
+            DueDate = l.Duedate,
+            ReturnDate = l.Returndate,
+            Status = l.Status
+        }).ToList();
+    }
+
+    public List<LoanDetailsDTO> GetLoanDetails(bool? status, string? userCpf, string? bookIsbn)
+    {
+        return _repository.SelectLoanDetails(status, userCpf, bookIsbn);
+    }
 }

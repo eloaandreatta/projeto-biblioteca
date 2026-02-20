@@ -118,4 +118,38 @@ public class LoanRepository : ILoanRepository
         _context.SaveChanges();
     }
 
+    public List<LoanDetailsDTO> SelectLoanDetails(bool? status, string? userCpf, string? bookIsbn)
+{
+    var query =
+        from loan in _context.TbLoans.AsNoTracking()
+        join user in _context.TbUsers.AsNoTracking()
+            on loan.UserCpf equals user.Cpf
+        join book in _context.TbBooks.AsNoTracking()
+            on loan.BookIsbn equals book.Isbn
+        select new { loan, user, book };
+
+    if (status != null)
+        query = query.Where(x => x.loan.Status == status.Value);
+
+    if (!string.IsNullOrWhiteSpace(userCpf))
+        query = query.Where(x => x.loan.UserCpf == userCpf);
+
+    if (!string.IsNullOrWhiteSpace(bookIsbn))
+        query = query.Where(x => x.loan.BookIsbn == bookIsbn);
+
+    return query.Select(x => new LoanDetailsDTO
+    {
+        LoanId = x.loan.Id,
+        LoanDate = x.loan.Loandate,
+        DueDate = x.loan.Duedate,
+        ReturnDate = x.loan.Returndate,
+        UserCpf = x.user.Cpf,
+        UserName = x.user.Name,
+        BookIsbn = x.book.Isbn,
+        BookTitle = x.book.Title
+    }).ToList();
+
+        
+}
+
 }
