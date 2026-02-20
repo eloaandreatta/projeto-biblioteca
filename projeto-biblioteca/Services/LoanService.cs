@@ -1,5 +1,6 @@
 using pBiblioteca.Models;
 using pBiblioteca.Services;
+namespace pBiblioteca.Services;
 
 public class LoanService : ILoanService
 {

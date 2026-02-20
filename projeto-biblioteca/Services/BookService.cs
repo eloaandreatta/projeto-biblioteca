@@ -1,5 +1,5 @@
 using pBiblioteca.Models;
-
+namespace pBiblioteca.Services;
 public class BookService : IBookService
 {
     private IBookRepository _repository;

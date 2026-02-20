@@ -6,7 +6,7 @@ using pBiblioteca.DTO;
 using pBiblioteca.Services;
 using System.Collections.Generic;
 
-namespace Projeto_Biblioteca.Tests
+namespace Projeto_Biblioteca.Tests.Controllers
 {
     [TestFixture]
     public class UserControllerTests
