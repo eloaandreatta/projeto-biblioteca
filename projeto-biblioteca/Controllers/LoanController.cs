@@ -8,23 +8,27 @@ namespace pBiblioteca.Controllers;
 [Route("[controller]")]
 public class LoanController : ControllerBase
 {
-    
-    private ILoanService _service;
+    private readonly ILoanService _service;
+    private readonly IWebHostEnvironment _env;
 
-    public LoanController(ILoanService service)
+    public LoanController(ILoanService service, IWebHostEnvironment env)
     {
         _service = service;
+        _env = env;
     }
 
-    //GET LOAN
-    [HttpGet(Name = "GetAllLoans")]
-    public IActionResult Get()
+   [HttpGet]
+    public IActionResult Get(
+        [FromQuery] bool? status,
+        [FromQuery] string? userCpf,
+        [FromQuery] string? bookIsbn)
     {
-        return Ok(_service.GetLoans());
+        var loans = _service.GetLoans(status, userCpf, bookIsbn);
+        return Ok(loans);
     }
 
 
-     // GET /Loan/{id}
+    // GET /Loan/{id}
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -85,28 +89,67 @@ public class LoanController : ControllerBase
         return Ok();
     }
 
-    // GET /Loan/user/{cpf}/active
-    [HttpGet("user/{cpf}/active")]
-    public IActionResult GetActiveLoansByUser(string cpf)
+    // GET /Loan/report
+    [HttpGet("report")]
+    public IActionResult GenerateLoanReport()
     {
-        var loans = _service.GetActiveLoansByUser(cpf);
+        var loans = _service.GetLoans(null, null, null);
 
         if (loans == null || !loans.Any())
-            return NotFound();
+            return NotFound("Nenhum empréstimo encontrado.");
 
-        return Ok(loans);
+        var linhas = new List<string>();
+
+        linhas.Add("LoanId;UserCpf;BookIsbn;LoanDate;DueDate;ReturnDate;Status;DiasAtraso");
+
+        foreach (var loan in loans)
+        {
+            int diasAtraso = 0;
+
+            if (loan.ReturnDate == null &&
+                loan.DueDate < DateOnly.FromDateTime(DateTime.Today))
+            {
+                diasAtraso =
+                    DateOnly.FromDateTime(DateTime.Today)
+                    .DayNumber - loan.DueDate.DayNumber;
+            }
+
+            var status = loan.ReturnDate == null
+                ? (diasAtraso > 0 ? "Atrasado" : "Ativo")
+                : "Devolvido";
+
+            linhas.Add($"{loan.Id};{loan.UserCpf};{loan.BookIsbn};" +
+                       $"{loan.LoanDate};{loan.DueDate};{loan.ReturnDate};" +
+                       $"{status};{diasAtraso}");
+        }
+
+        var pasta = Path.Combine(_env.ContentRootPath, "Relatorios");
+
+        if (!Directory.Exists(pasta))
+            Directory.CreateDirectory(pasta);
+
+        var nomeArquivo = $"relatorio-loans-{DateTime.Now:yyyyMMdd-HHmmss}.csv";
+        var caminho = Path.Combine(pasta, nomeArquivo);
+
+        System.IO.File.WriteAllLines(caminho, linhas);
+
+        return File(System.IO.File.ReadAllBytes(caminho),
+                    "text/csv",
+                    nomeArquivo);
     }
 
-    // GET /Loan/user/{cpf}/history
-    [HttpGet("user/{cpf}/history")]
-    public IActionResult GetLoanHistoryByUser(string cpf)
-    {
-        var loans = _service.GetLoanHistoryByUser(cpf);
+    [HttpGet("details")]
+public IActionResult GetDetails(
+    [FromQuery] bool? status,
+    [FromQuery] string? userCpf,
+    [FromQuery] string? bookIsbn)
+{
+    var result = _service.GetLoanDetails(status, userCpf, bookIsbn);
 
-        if (loans == null || !loans.Any())
-            return NotFound();
+    if (result == null || !result.Any())
+        return NotFound();
 
-        return Ok(loans);
-    }
-    
+    return Ok(result);
+}
+
 }
