@@ -27,5 +27,6 @@ public interface ILoanRepository
     public bool UserHasUnpaidFine(string cpf);
     void AddFine(TbFine fine);
     public void Save();
+    List<LoanDetailsDTO> SelectLoanDetails(bool? status, string? userCpf, string? bookIsbn);
 
 }

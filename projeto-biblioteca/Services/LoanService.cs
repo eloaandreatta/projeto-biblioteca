@@ -1,5 +1,6 @@
 using pBiblioteca.Models;
 using pBiblioteca.Services;
+namespace pBiblioteca.Services;
 
 public class LoanService : ILoanService
 {
@@ -7,14 +8,19 @@ public class LoanService : ILoanService
     private readonly IFineRepository _fineRepo;
     private readonly IReservationService _reservationService; 
 
-    private const decimal DAILY_FINE_RATE = 0.50m;
+    private const decimal DAILY_FINE_RATE = 0.30m;
     private const int LOAN_PERIOD_DAYS = 14;
+<<<<<<< HEAD
     private const int RESERVATION_PICKUP_DAYS = 3; 
 
     public LoanService(
         ILoanRepository repository,
         IFineRepository fineRepo,
         IReservationService reservationService) 
+=======
+
+    public LoanService(ILoanRepository repository)
+>>>>>>> 79e4bf33068926dc124bbbf5480521bd24b04751
     {
         _repository = repository;
         _fineRepo = fineRepo;
@@ -135,7 +141,11 @@ public class LoanService : ILoanService
             dueDate
         );
 
-        if (!success) return "error";
+        if (!success)
+            return "error";
+
+        // Atualiza estoque (reduz disponibilidade)
+        book.Availablequantity--;
 
         book.Availablequantity--;
         _repository.Save();
@@ -231,4 +241,34 @@ public class LoanService : ILoanService
         _repository.Save();
         return "ok";
     }
-}
+
+    public List<LoanResponseDTO> GetLoans(bool? status, string? userCpf, string? bookIsbn)
+    {
+        var tbLoans = _repository.SelectLoans();
+
+        if (status.HasValue)
+            tbLoans = tbLoans.Where(l => l.Status == status.Value).ToList();
+
+        if (!string.IsNullOrEmpty(userCpf))
+            tbLoans = tbLoans.Where(l => l.UserCpf == userCpf).ToList();
+
+        if (!string.IsNullOrEmpty(bookIsbn))
+            tbLoans = tbLoans.Where(l => l.BookIsbn == bookIsbn).ToList();
+
+        return tbLoans.Select(tbLoan => new LoanResponseDTO
+        {
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
+        }).ToList();
+    }
+    
+    public List<LoanDetailsDTO> GetLoanDetails(bool? status, string? userCpf, string? bookIsbn)
+    {
+        return _repository.SelectLoanDetails(status, userCpf, bookIsbn);
+    }
+

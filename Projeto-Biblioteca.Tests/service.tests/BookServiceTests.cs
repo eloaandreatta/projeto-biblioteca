@@ -2,8 +2,13 @@ using Moq;
 using NUnit.Framework;
 using pBiblioteca.Models;
 using System.Collections.Generic;
+<<<<<<< HEAD
 
 namespace pBiblioteca.Services
+=======
+using pBiblioteca.Services;
+namespace Projeto_Biblioteca.Tests
+>>>>>>> 79e4bf33068926dc124bbbf5480521bd24b04751
 {
     [TestFixture]
     public class BookServiceTests

@@ -3,6 +3,7 @@ using Moq;
 using pBiblioteca.Models;
 using System;
 using System.Collections.Generic;
+using pBiblioteca.Services;
 
 namespace pBiblioteca.Services
 {

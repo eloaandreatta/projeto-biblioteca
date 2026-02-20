@@ -4,7 +4,9 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage">
         <Configuration>
+          <Format>cobertura</Format>
 
+<<<<<<< HEAD
           <!-- ✅ Só conta cobertura do assembly principal -->
           <Include>[pBiblioteca]*</Include>
 
@@ -21,6 +23,23 @@
             [pBiblioteca]pBiblioteca.WeatherForecast,
             [pBiblioteca]pBiblioteca.ReservationExpirationHostedService
           </Exclude>
+=======
+          <!-- Excluir por padrão de nome (assembly/type filter) -->
+          <Exclude>[pBiblioteca]pBiblioteca.Models.*,[pBiblioteca]pBiblioteca.DTO.*</Exclude>
+          <ModulePath>.*Microsoft.AspNetCore.OpenApi.*</ModulePath>
+
+          <!-- Excluir por arquivo -->
+          <ExcludeByFile>**/Models/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/DTO/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Repositories/**/*.cs</ExcludeByFile>
+           <ExcludeByFile>**/Repository/**/*.cs</ExcludeByFile>
+          <ExcludeByFile>**/Program.cs</ExcludeByFile>
+
+         
+          <!-- Excluir por módulos/assemblies (opcional; pode até tirar) -->
+          <ExcludeByFile>**/obj/**</ExcludeByFile>
+          <ExcludeByFile>**/bin/**</ExcludeByFile>
+>>>>>>> 79e4bf33068926dc124bbbf5480521bd24b04751
 
           <Format>cobertura</Format>
           <SingleHit>false</SingleHit>
