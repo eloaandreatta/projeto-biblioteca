@@ -1,12 +1,14 @@
 using pBiblioteca.Models;
 using pBiblioteca.Services;
+namespace pBiblioteca.Services;
 
 public class LoanService : ILoanService
 {
     private readonly ILoanRepository _repository;
-    // REGRA DE NEGÓCIO:
-    // Valor fixo da multa por dia de atraso.
-    private const decimal DAILY_FINE_RATE = 0.50m;
+    private readonly IFineRepository _fineRepo;
+    private readonly IReservationService _reservationService; // ✅ NOVO
+
+    private const decimal DAILY_FINE_RATE = 0.30m;
     private const int LOAN_PERIOD_DAYS = 14;
 
     public LoanService(ILoanRepository repository)
@@ -235,29 +237,29 @@ public class LoanService : ILoanService
     {
         var tbLoans = _repository.SelectLoans();
 
-        if (status != null)
+        if (status.HasValue)
             tbLoans = tbLoans.Where(l => l.Status == status.Value).ToList();
 
-        if (!string.IsNullOrWhiteSpace(userCpf))
+        if (!string.IsNullOrEmpty(userCpf))
             tbLoans = tbLoans.Where(l => l.UserCpf == userCpf).ToList();
 
-        if (!string.IsNullOrWhiteSpace(bookIsbn))
+        if (!string.IsNullOrEmpty(bookIsbn))
             tbLoans = tbLoans.Where(l => l.BookIsbn == bookIsbn).ToList();
 
-        return tbLoans.Select(l => new LoanResponseDTO
+        return tbLoans.Select(tbLoan => new LoanResponseDTO
         {
-            Id = l.Id,
-            UserCpf = l.UserCpf,
-            BookIsbn = l.BookIsbn,
-            LoanDate = l.Loandate,
-            DueDate = l.Duedate,
-            ReturnDate = l.Returndate,
-            Status = l.Status
+            Id = tbLoan.Id,
+            UserCpf = tbLoan.UserCpf,
+            BookIsbn = tbLoan.BookIsbn,
+            LoanDate = tbLoan.Loandate,
+            DueDate = tbLoan.Duedate,
+            ReturnDate = tbLoan.Returndate,
+            Status = tbLoan.Status
         }).ToList();
     }
-
+    
     public List<LoanDetailsDTO> GetLoanDetails(bool? status, string? userCpf, string? bookIsbn)
     {
         return _repository.SelectLoanDetails(status, userCpf, bookIsbn);
     }
-}
+

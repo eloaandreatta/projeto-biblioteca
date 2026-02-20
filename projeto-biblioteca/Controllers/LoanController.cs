@@ -17,7 +17,7 @@ public class LoanController : ControllerBase
         _env = env;
     }
 
-   [HttpGet]
+    [HttpGet]
     public IActionResult Get(
         [FromQuery] bool? status,
         [FromQuery] string? userCpf,

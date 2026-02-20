@@ -1,5 +1,5 @@
 using pBiblioteca.Models;
-
+namespace pBiblioteca.Services;
 public class BookService : IBookService
 {
     private IBookRepository _repository;
@@ -71,6 +71,7 @@ public class BookService : IBookService
         if (request.TotalQuantity < 0) return "error";
         if (request.AvailableQuantity < 0) return "error";
         if (request.AvailableQuantity > request.TotalQuantity) return "error";
+
 
         string isbn = request.Isbn.Trim();
 

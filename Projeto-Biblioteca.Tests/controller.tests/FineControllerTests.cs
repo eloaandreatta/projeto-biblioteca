@@ -154,7 +154,7 @@ namespace Projeto_Biblioteca.Tests.Controllers
 
             var result = _controller.Pay(fineId);
 
-            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+            Assert.That(((BadRequestObjectResult)result).Value, Is.EqualTo("error"));
 
             var bad = (BadRequestObjectResult)result;
 

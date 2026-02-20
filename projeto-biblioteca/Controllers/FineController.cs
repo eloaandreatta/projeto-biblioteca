@@ -4,7 +4,7 @@ using pBiblioteca.DTO;
 namespace pBiblioteca.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class FineController : ControllerBase
 {
     private readonly IFineService _service;

@@ -42,6 +42,8 @@ namespace pBiblioteca.Services
         // CRIAR CADASTRO
         public string CreateUser(CreateUserRequestDTO request)
         {
+            if (request == null)
+                return "error";
             if (string.IsNullOrWhiteSpace(request.Cpf))
                 return "CPF é obrigatório.";
 
