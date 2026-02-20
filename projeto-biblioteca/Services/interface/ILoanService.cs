@@ -11,6 +11,8 @@ public interface ILoanService
     string CreateLoan(CreateLoanRequest request);
     string ReturnLoan(int id);
     string RenewLoan(int id);
+    public IEnumerable<LoanResponseDTO> GetActiveLoansByUser(string cpf);
+    public IEnumerable<LoanResponseDTO> GetLoanHistoryByUser(string cpf);
 
     // JOIN: Empréstimos + Usuário + Livro
     List<LoanDetailsDTO> GetLoanDetails(bool? status, string? userCpf, string? bookIsbn);
